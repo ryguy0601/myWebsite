@@ -1,0 +1,29 @@
+html,
+body {
+	background-color: #222222;
+	color: #ffffff;
+}
+
+li {
+	float: left;/*makes it so all text is as far left as posible*/
+	display: inline;
+}
+
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+  }
+
+a {
+	background-color: #777777;
+	transition: all 1.75s ease;
+}
+
+a:hover{
+	color: #ff0000;
+	background-color: #000000;
+
+}
