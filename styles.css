@@ -10,7 +10,7 @@ li {
 }
 
 li:hover{
-	top: -5px;
+	top: +50px;
 }
 
 li a {
