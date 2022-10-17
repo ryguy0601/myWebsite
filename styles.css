@@ -33,9 +33,9 @@ a:hover{
 
 }
 
-ul {
+/* ul {
 	position: sticky;
-  }
+  } */
 
 ul:hover{
 	top: +50px;
