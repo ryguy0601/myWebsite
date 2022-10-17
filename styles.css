@@ -13,6 +13,7 @@ li {
 } */
 
 li a {
+	top:-50px;
 	display: block;
 	color: white;
 	text-align: center;
@@ -33,11 +34,7 @@ a:hover{
 
 }
 
-/* ul {
+ul {
 	position: sticky;
-  } */
+  }
 
-ul:hover{
-	top: +50px;
-
-}
