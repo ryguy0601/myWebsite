@@ -30,10 +30,14 @@ a:hover{
 	color: #ff0000;
 	background-color: #000000;
 	border: 1px solid #ff0000;
-	top: +50px;
 
 }
 
 ul {
 	position: sticky;
   }
+
+ul:hover{
+	top: +50px;
+
+}
