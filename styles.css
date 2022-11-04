@@ -75,7 +75,7 @@ ul {
 	background-image: linear-gradient(120deg, rgba(255, 0, 0, 0.5), var(--accent-color));
 }
 
-div.row>div {
+div.col>div {
 	width: 50px;
 	height: 50px;
 	display: flex;
@@ -83,28 +83,28 @@ div.row>div {
 	align-items: center;
 }
 
-div.row:nth-child(even)>div:nth-child(even),
-div.row:nth-child(odd)>div:nth-child(odd) {
+div.col:nth-child(even)>div:nth-child(even),
+div.col:nth-child(odd)>div:nth-child(odd) {
 	transition: all 1s ease;
 	border: 1px solid #00ff00;
 	background-color: #000000;
 }
 
-div.row:nth-child(even)>div:nth-child(even):hover,
-div.row:nth-child(odd)>div:nth-child(odd):hover {
+div.col:nth-child(even)>div:nth-child(even):hover,
+div.col:nth-child(odd)>div:nth-child(odd):hover {
 	box-shadow: 0rem 0rem 1.25rem var(--border-hover) inset;
 	background-color: #000000;
 }
 
-div.row:nth-child(even)>div:nth-child(odd),
-div.row:nth-child(odd)>div:nth-child(even) {
+div.col:nth-child(even)>div:nth-child(odd),
+div.col:nth-child(odd)>div:nth-child(even) {
 	transition: all 1s ease;
 	border: 1px solid #00ff00;
 	background-color: transparent;
 }
 
-div.row:nth-child(even)>div:nth-child(odd):hover,
-div.row:nth-child(odd)>div:nth-child(even):hover {
+div.col:nth-child(even)>div:nth-child(odd):hover,
+div.col:nth-child(odd)>div:nth-child(even):hover {
 	box-shadow: 0rem 0rem 1.25rem var(--border-hover) inset;
 	background-color: #00000088;
 }
