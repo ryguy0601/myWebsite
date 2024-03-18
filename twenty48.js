@@ -4,11 +4,11 @@ class twenty48 {
         this.dimensions = dimensions
         this.score = 0
 
-        this.board = [
-            [0,0,2,0],
-            [0,0,2,0],
-            [2,2,2,0],
-            [0,0,0,0]];
+        // this.board = [
+        //     [0,0,2,0],
+        //     [0,0,2,0],
+        //     [2,2,2,0],
+        //     [0,0,0,0]];
         
         this.board = new Array(dimensions).fill(0).map(() => new Array(dimensions).fill(0));
         for (let x = 0; x < this.dimensions; x++) {
@@ -19,8 +19,8 @@ class twenty48 {
         // console.log(this.board)
 
         //initial numbers
-        // this.addNum()
-        // this.addNum()
+        this.addNum()
+        this.addNum()
         // console.log(this.board)
     }
 
