@@ -5,12 +5,12 @@ class twenty48 {
         this.score = 0
 
         this.board = [
-            [0,0,0,0],
-            [0,0,0,0],
-            [0,2,0,0],
+            [0,0,2,0],
+            [0,0,2,0],
+            [2,2,2,0],
             [0,0,0,0]];
         
-        this.board = new Array(dimensions).fill(0).map(() => new Array(dimensions).fill(0));
+        // this.board = new Array(dimensions).fill(0).map(() => new Array(dimensions).fill(0));
         for (let x = 0; x < this.dimensions; x++) {
             for (let y = 0; y < this.dimensions; y++) {
                 this.board[x][y] = new nums(this.board[x][y])
@@ -19,8 +19,8 @@ class twenty48 {
         // console.log(this.board)
 
         //initial numbers
-        this.addNum()
-        this.addNum()
+        // this.addNum()
+        // this.addNum()
         // console.log(this.board)
     }
 
@@ -97,7 +97,7 @@ class twenty48 {
         let temp = null
         for(let i = 0; i<this.dimensions; i++){
             for (let x = 0; x < this.dimensions; x++) {
-                for (let y = 0; y < this.dimensions-1 ; y++) {
+                for (let y = this.dimensions-2; y >-1 ; y--) {
                     temp = this.moveNum(temp,x,y,0,1)
                 }
             }
@@ -108,7 +108,7 @@ class twenty48 {
     goUp(){
         let temp = null
         for(let i = 0; i<this.dimensions; i++){
-            for (let x = this.dimensions-1; x >=1 ; x--) {
+            for (let x = 1; x < this.dimensions ; x++) {
                 for (let y = 0; y < this.dimensions ; y++) {
                     temp = this.moveNum(temp,x,y,-1,0)
                 }
@@ -120,7 +120,7 @@ class twenty48 {
     goDown(){
         let temp = null
         for(let i = 0; i<this.dimensions; i++){
-            for (let x = 0; x <this.dimensions-1 ; x++) {
+            for (let x = this.dimensions-2; x > -1 ; x--) {
                 for (let y = 0; y < this.dimensions ; y++) {
                     temp = this.moveNum(temp,x,y,1,0)
                 }
