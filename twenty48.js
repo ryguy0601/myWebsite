@@ -10,7 +10,7 @@ class twenty48 {
             [2,2,2,0],
             [0,0,0,0]];
         
-        // this.board = new Array(dimensions).fill(0).map(() => new Array(dimensions).fill(0));
+        this.board = new Array(dimensions).fill(0).map(() => new Array(dimensions).fill(0));
         for (let x = 0; x < this.dimensions; x++) {
             for (let y = 0; y < this.dimensions; y++) {
                 this.board[x][y] = new nums(this.board[x][y])
