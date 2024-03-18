@@ -9,6 +9,8 @@ const width = canvas.width
 const height = canvas.height
 
 ctx.strokeStyle = "#ff00ffaa";
+ctx.textBaseline = "middle";
+ctx.textAlign = "center"; 
 
 
 
@@ -31,24 +33,24 @@ function drawNums(){
     for(let x=0; x<dim; x++){
         for (let y=0; y<dim; y++){
             let num = game.getBoard()[x][y]
-            // ctx.font = "9px Comic Sans MS";
-            // ctx.fillStyle = "#ffffff";
-            // ctx.fillText(x, (width*y/dim)+45, (height*x/dim)+20);
-            // ctx.fillText(y, (width*y/dim)+55, (height*x/dim)+20);
             if(num.getNum()!=0){
-                ctx.font = "15px Comic Sans MS";
-                ctx.fillStyle = "red";
-                ctx.fillText(num.getNum(), (width*y/dim)+25, (height*x/dim)+25);
-                ctx.font = "15px Comic Sans MS";
-                // ctx.fillText(num.getState(), (width*y/dim)+25, (height*x/dim)+35) 
+                ctx.font = "15px Verdana";
+                ctx.fillStyle = "#ff0000";
+                ctx.fillText(num.getNum(), (width*y/dim+35), (height*x/dim+20));
             }
         }        
     }
 }
 
+function updateScore(){
+    let element = document.getElementById("score")
+    element.innerHTML = "Score: "+game.getScore()
+}
+
 window.onload = function() {
     drawBoard()
     drawNums()
+    updateScore()
 }
 
 //keyboard detection
@@ -74,6 +76,7 @@ document.addEventListener("keyup", function(event) {
     drawBoard()
     drawNums()
     game.resetNumState()
+    updateScore()
   });
 
 

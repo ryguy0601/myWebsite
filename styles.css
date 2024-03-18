@@ -3,7 +3,7 @@ body, html{
     color: #fff;
 }
 
-#myCanvas{
+#myDiv{
     width: 55%;
     aspect-ratio: 5/4;
 
@@ -11,6 +11,14 @@ body, html{
     background: #000;
 
     border-radius: 10%;
+}
+#myCanvas{
+    width: 100%;
+    aspect-ratio: 5/4;
+}
+#score{
+    text-align: center;
+
 }
 
 .center{

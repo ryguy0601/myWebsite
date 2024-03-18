@@ -2,19 +2,17 @@ class twenty48 {
     constructor(dimensions=4) {
         // default 4x4 grid
         this.dimensions = dimensions
+        this.score = 0
 
-        // this.board = [
-        //     [0,0,0,2],
-        //     [0,0,0,2],
-        //     [0,0,0,2],
-        //     [2,2,2,2]];
+        this.board = [
+            [0,0,0,0],
+            [0,0,0,0],
+            [0,2,0,0],
+            [0,0,0,0]];
         
         this.board = new Array(dimensions).fill(0).map(() => new Array(dimensions).fill(0));
         for (let x = 0; x < this.dimensions; x++) {
             for (let y = 0; y < this.dimensions; y++) {
-
-                // Access each element of the board using this.board[x][y]
-                // Example: console.log(this.board[x][y]);
                 this.board[x][y] = new nums(this.board[x][y])
             }
         }
@@ -30,6 +28,7 @@ class twenty48 {
     getDimensions() {return this.dimensions}
     getBoard(){return this.board}
     getSpot(x,y){return this.board[x][y].getNum()}
+    getScore(){return this.score}
 
     randomNum(min, max) {
         //max is exlusive
@@ -75,7 +74,8 @@ class twenty48 {
                 this.board[x+x1][y+y1].dub()
                 this.board[x+x1][y+y1].setState(true)
                 this.board[x][y].setNum(0)
-                temp = 1//can be anything but null
+                temp = this.getSpot(x+x1,y+y1)//can be anything but null
+                this.score += temp
             }
         }
         return temp
