@@ -1,3 +1,8 @@
+document.addEventListener('touchstart', handleTouchStart, false);        
+document.addEventListener('touchmove', handleTouchMove, false);
+let xDown = null;                                                        
+let yDown = null;
+
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -12,7 +17,41 @@ ctx.strokeStyle = "#ff00ffaa";
 ctx.textBaseline = "middle";
 ctx.textAlign = "center"; 
 
+function getTouches(evt) {
+    return evt.touches;
+}  
+function handleTouchStart(evt) {
+    const firstTouch = getTouches(evt)[0];                                      
+    xDown = firstTouch.clientX;                                      
+    yDown = firstTouch.clientY;                                      
+}
+function handleTouchMove(evt) {
+    if ( ! xDown || ! yDown ) {
+        return;
+    }
 
+    var xUp = evt.touches[0].clientX;                                    
+    var yUp = evt.touches[0].clientY;
+
+    var xDiff = xDown - xUp;
+    var yDiff = yDown - yUp;
+                                                                         
+    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+        if ( xDiff > 0 ) {
+            game.goRight() 
+        } else {
+            game.goLeft()
+        }                       
+    } else {
+        if ( yDiff > 0 ) {
+            game.goDown() 
+        } else { 
+            game.goUp()
+        }                                                                 
+    }
+    xDown = null;
+    yDown = null;                                             
+};
 
 function drawBoard(){
     for(let i=1; i<dim;i++){
