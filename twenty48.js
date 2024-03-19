@@ -82,7 +82,7 @@ class twenty48 {
     }
 
     goLeft(){
-        console.log("L")
+        // console.log("L")
         let temp = null
         for(let i = 0; i<this.dimensions; i++){
             for (let x = 0; x < this.dimensions; x++) {
@@ -95,7 +95,7 @@ class twenty48 {
     }
     
     goRight(){
-        console.log("R")
+        // console.log("R")
         let temp = null
         for(let i = 0; i<this.dimensions; i++){
             for (let x = 0; x < this.dimensions; x++) {
@@ -108,7 +108,7 @@ class twenty48 {
     }
     
     goUp(){
-        console.log("U")
+        // console.log("U")
         let temp = null
         for(let i = 0; i<this.dimensions; i++){
             for (let x = 1; x < this.dimensions ; x++) {
@@ -121,7 +121,7 @@ class twenty48 {
     }
         
     goDown(){
-        console.log("D")
+        // console.log("D")
         let temp = null
         for(let i = 0; i<this.dimensions; i++){
             for (let x = this.dimensions-2; x > -1 ; x--) {

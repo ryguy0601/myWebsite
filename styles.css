@@ -14,7 +14,7 @@ body, html{
 }
 #myCanvas{
     width: 100%;
-    aspect-ratio: 5/4;
+    aspect-ratio: 5/3.25;
 }
 #score{
     text-align: center;
