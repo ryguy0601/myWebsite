@@ -1,7 +1,10 @@
 document.addEventListener('touchstart', handleTouchStart, false);        
 document.addEventListener('touchmove', handleTouchMove, false);
+document.addEventListener('touchend', handleTouchEnd, false);
 let xDown = null;                                                        
 let yDown = null;
+let xDiff = null;
+let yDiff = null;
 
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
@@ -26,32 +29,40 @@ function handleTouchStart(evt) {
     yDown = firstTouch.clientY;                                      
 }
 function handleTouchMove(evt) {
-    if ( ! xDown || ! yDown ) {
-        return;
-    }
-
     var xUp = evt.touches[0].clientX;                                    
     var yUp = evt.touches[0].clientY;
 
-    var xDiff = xDown - xUp;
-    var yDiff = yDown - yUp;
-                                                                         
+    xDiff = xDown - xUp;
+    yDiff = yDown - yUp;                     
+};
+
+function handleTouchEnd(evt){
+
     if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
-        if ( xDiff > 0 ) {
-            game.goRight() 
-        } else {
+        if ( xDiff < 0 ) {
+            game.goRight()
+        }
+        if(xDiff > 0) {
             game.goLeft()
         }                       
     } else {
         if ( yDiff > 0 ) {
-            game.goDown() 
-        } else { 
             game.goUp()
+        }
+        if(yDiff < 0) { 
+            game.goDown()
         }                                                                 
     }
     xDown = null;
-    yDown = null;                                             
-};
+    yDown = null;
+    xDiff = null;
+    yDiff = null; 
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawBoard()
+    drawNums()
+    game.resetNumState()
+    updateScore()  
+}
 
 function drawBoard(){
     for(let i=1; i<dim;i++){
