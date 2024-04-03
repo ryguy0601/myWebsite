@@ -11,7 +11,7 @@ const ctx = canvas.getContext("2d");
 
 const game = new twenty48();//default dimentions 4x4
 const dim = game.getDimensions();
-console.log(game.getBoard())
+// console.log(game.getBoard())
 // let board = game.getBoard()
 const width = canvas.width
 const height = canvas.height
@@ -20,6 +20,7 @@ ctx.strokeStyle = "#ff00ffaa";
 ctx.textBaseline = "middle";
 ctx.textAlign = "center"; 
 
+//touchscreen stuff
 function getTouches(evt) {
     return evt.touches;
 }  
@@ -64,6 +65,7 @@ function handleTouchEnd(evt){
     updateScore()  
 }
 
+//drawing on the screen
 function drawBoard(){
     for(let i=1; i<dim;i++){
         //vertical lines
@@ -85,48 +87,68 @@ function drawNums(){
             let num = game.getBoard()[x][y]
             if(num.getNum()!=0){
                 ctx.font = "15px Verdana";
-                ctx.fillStyle = "#ff0000";
+                ctx.fillStyle = "#ff0000aa";
                 ctx.fillText(num.getNum(), (width*y/dim+35), (height*x/dim+20));
             }
         }        
     }
 }
 
+
 function updateScore(){
     let element = document.getElementById("score")
     element.innerHTML = "Score: "+game.getScore()
-}
-
-window.onload = function() {
-    drawBoard()
-    drawNums()
-    updateScore()
+    if(game.getDidLose()){ 
+        element.innerHTML+="<br><strong style='color:#ff0000'>YOU LOSE</strong>"
+    }
 }
 
 //keyboard detection
 document.addEventListener("keyup", function(event) {
     // console.log(`Key pressed: ${event.key}`);
-    switch (event.key) {
-    case "ArrowLeft":
-        game.goLeft();
-        break;
-    case "ArrowRight":
-        game.goRight();
-        break;
-    case "ArrowUp":
-        game.goUp();
-        break;
-    case "ArrowDown":
-        game.goDown();
-        break;
-    default:
-        break;
+    if(game.getDidLose()){ 
+        return 
     }
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBoard()
-    drawNums()
-    game.resetNumState()
-    updateScore()
+    if(game.loseCheck()){
+        ctx.fillStyle = "#ff000044";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        updateScore()
+    }else{
+        switch (event.key) {
+        case "ArrowLeft":
+            game.goLeft();
+            break;
+        case "ArrowRight":
+            game.goRight();
+            break;
+        case "ArrowUp":
+            game.goUp();
+            break;
+        case "ArrowDown":
+            game.goDown();
+            break;
+        default:
+            break;
+        }
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBoard()
+        drawNums()
+        game.resetNumState()
+        updateScore()
+
+        if(game.loseCheck()){
+            ctx.fillStyle = "#ffffff44";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            updateScore()
+        }
+    }
   });
 
+//draws board when page loads
+  window.onload = function() {
+    drawBoard()
+    drawNums()
+    updateScore()
+}
 

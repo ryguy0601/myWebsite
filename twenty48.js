@@ -3,6 +3,7 @@ class twenty48 {
         // default 4x4 grid
         this.dimensions = dimensions
         this.score = 0
+        this.didLose = false
 
         // this.board = [
         //     [0,0,2,0],
@@ -29,30 +30,56 @@ class twenty48 {
     getBoard(){return this.board}
     getSpot(x,y){return this.board[x][y].getNum()}
     getScore(){return this.score}
+    getDidLose(){return this.didLose}
 
     randomNum(min, max) {
         //max is exlusive
         return Math.floor(Math.random() * (max - min)) + min; 
     }
 
-    isListZero(x){
-        for(let i = 0; i < x.length; i++){
-            if(x[i] !== 0){
-                return false;
+    loseCheck(){//
+        //checks if there are any zeros on the board
+        for (let x = 0; x < this.dimensions; x++) {
+            for (let y = 0; y < this.dimensions; y++) {
+                if(this.getSpot(x,y) == 0){return false}
             }
         }
-        return true;
+        return this.lose()
+    }
+    lose(){
+        //checks if any moves can be made
+        for (let x = 0; x < this.dimensions; x++) {
+            for (let y = 0; y < this.dimensions; y++) {
+                if(x != 0 && this.getSpot(x-1,y) == this.getSpot(x,y)){
+                    return false
+                }
+                if(x <= this.dimensions-2 && this.getSpot(x+1,y) == this.getSpot(x,y)){
+                    return false
+                }
+                if(y <= this.dimensions-2 && this.getSpot(x,y+1) == this.getSpot(x,y)){
+                    return false
+                }
+                if(y != 0 && this.getSpot(x,y-1) == this.getSpot(x,y)){
+                    return false
+                }
+            }
+        } 
+        console.log("You lose")
+        this.didLose = true
+        return true
     }
 
     addNum(){
-        //TODO check if all squares are taken to end game
-        let x = this.randomNum(0,this.dimensions)
-        let y = this.randomNum(0,this.dimensions)
-        while(this.board[x][y].getNum() != 0){//checks to not override another number
-            x = this.randomNum(0,this.dimensions)
-            y = this.randomNum(0,this.dimensions)           
+        
+        if(this.loseCheck){
+            let x = this.randomNum(0,this.dimensions)
+            let y = this.randomNum(0,this.dimensions)
+            while(this.board[x][y].getNum() != 0){//checks to not override another number
+                x = this.randomNum(0,this.dimensions)
+                y = this.randomNum(0,this.dimensions)           
+            }
+            this.board[x][y].setNum(2*this.randomNum(1,3))
         }
-        this.board[x][y].setNum(2*this.randomNum(1,3))
     }
 
     resetNumState(){
