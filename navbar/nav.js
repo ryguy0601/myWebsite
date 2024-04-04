@@ -13,5 +13,3 @@ fetch("/navbar/nav.html")
 		console.error("Error:", error);
 	});
 
-
-	
