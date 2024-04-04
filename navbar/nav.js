@@ -1,31 +1,27 @@
 
-document.getElementsByTagName(
-	"head"
-)[0].innerHTML += `<link rel="stylesheet" href="/navbar/nav.css">`;
+// document.getElementsByTagName(
+// 	"head"
+// )[0].innerHTML += `<link rel="stylesheet" href="/navbar/nav.css">`;
 
 
-// fetch("/navbar/nav.html")
-// 	.then((response) => response.text())
-// 	.then((data) => {
-// 		document.getElementById("nav").innerHTML = data;
-// 		console.log(data)
-// 	})
-// 	.catch((error) => {
-// 		console.error("Error:", error);
-// 	});
+fetch("/navbar/nav.html")
+	.then((response) => response.text())
+	.then((data) => {
+		document.getElementById("nav").innerHTML = data;
+		console.log(data)
+	})
+	.catch((error) => {
+		console.error("Error:", error);
+	});
 
-// console.log(1)
-(async function(){
-	let code = await fetch("https://ryguy0601.github.io/myWebsite/navbar/nav.js").then((response) => response.text())
-	let location = document.getElementById("nav")
-	location.innerHTML = code;
-})();
-
-	// .then((response) => response.text())
-	// .then((data) => {
-	// 	document.getElementById("nav").innerHTML = data;
-	// 	console.log(data)
-	// })
-	// .catch((error) => {
-	// 	console.error("Error:", error);
-	// });
+fetch("/navbar/nav.css")
+	.then((response) => response.text())
+	.then((data) => {
+		const style = document.createElement("style");
+		style.innerHTML = data;
+		document.head.appendChild(style);
+		console.log(data)
+	})
+	.catch((error) => {
+		console.error("Error:", error);
+	});
