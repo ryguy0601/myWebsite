@@ -4,7 +4,7 @@
 // )[0].innerHTML += `<link rel="stylesheet" href="/navbar/nav.css">`;
 
 
-fetch("/navbar/nav.html")
+fetch("https://ryguy0601.github.io/myWebsite/navbar/nav.html")
 	.then((response) => response.text())
 	.then((data) => {
 		document.getElementById("nav").innerHTML = data;
@@ -14,7 +14,7 @@ fetch("/navbar/nav.html")
 		console.error("Error:", error);
 	});
 
-fetch("/navbar/nav.css")
+fetch("https://ryguy0601.github.io/myWebsite/navbar/nav.css")
 	.then((response) => response.text())
 	.then((data) => {
 		const style = document.createElement("style");
@@ -25,3 +25,4 @@ fetch("/navbar/nav.css")
 	.catch((error) => {
 		console.error("Error:", error);
 	});
+
