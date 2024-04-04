@@ -16,7 +16,7 @@ document.getElementsByTagName(
 
 // console.log(1)
 (async function(){
-	let code = await fetch("/navbar/nav.html").then((response) => response.text())
+	let code = await fetch("https://ryguy0601.github.io/myWebsite/navbar/nav.js").then((response) => response.text())
 	let location = document.getElementById("nav")
 	location.innerHTML = code;
 })();
