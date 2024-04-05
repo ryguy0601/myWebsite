@@ -1,6 +1,6 @@
 
 location = document.location
-
+console.log(location)
 
 document.getElementsByTagName(
 	"head"
