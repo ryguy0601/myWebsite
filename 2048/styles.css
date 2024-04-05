@@ -5,6 +5,8 @@ html {
 }
 
 #myDiv {
+	max-width: 45em;
+	max-height: 36em;
 	width: 55%;
 	aspect-ratio: 5/4;
 

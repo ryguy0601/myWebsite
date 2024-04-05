@@ -1,12 +1,15 @@
 document.getElementsByTagName("head")[0].innerHTML += `
 <style>
+#nav {
+	padding-bottom:32px;
+}
 .navbar {
 	/*overflow: hidden;*/
 	background-image: linear-gradient(315deg, rgb(0 0 0), rgb(93 3 99));
 	position: fixed;
 	top: 0;
+	left: 0;
 	width: 100%;
-	margin-bottom: 10px;
 }
 
 .navbar a {
@@ -70,6 +73,9 @@ document.getElementsByTagName("head")[0].innerHTML += `
 	display: block;
 }
 
+.content {
+	
+}
 </style>
 `;
 
