@@ -5,11 +5,11 @@ document.getElementsByTagName(
 
 document.getElementById("nav").innerHTML=`
 <nav class="navbar">
-	<a href="mywebsite/index.html">Home</a>
+	<a href="/index.html">Home</a>
 	<div class="nav-dropdown">
 		<button class="nav-dropbtn">Games</button>
 		<div class="nav-dropdown-content">
-			<a href="/mywebsite/2048/2048.html">2048</a>
+			<a href="/2048/2048.html">2048</a>
 			<a href="#">WIP</a>
 		</div>
 	</div>
