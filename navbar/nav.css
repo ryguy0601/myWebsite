@@ -1,8 +1,13 @@
+#nav{
+	padding-bottom: 25px;
+}
+
 .navbar {
 	/*overflow: hidden;*/
 	background-image: linear-gradient(315deg, rgb(0 0 0), rgb(93 3 99));
 	position: fixed;
 	top: 0;
+	left: 0;
 	width: 100%;
 	margin-bottom: 10px;
 }
