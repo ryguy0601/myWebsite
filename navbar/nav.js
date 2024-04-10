@@ -1,15 +1,15 @@
 document.getElementsByTagName(
 	"head"
-)[0].innerHTML += `<link rel="stylesheet" href="/../navbar/nav.css">`;
+)[0].innerHTML += `<link rel="stylesheet" href="~/navbar/nav.css">`;
 
 
 document.getElementById("nav").innerHTML=`
 <nav class="navbar">
-	<a href="/../index.html">Home</a>
+	<a href="~/index.html">Home</a>
 	<div class="nav-dropdown">
 		<button class="nav-dropbtn">Games</button>
 		<div class="nav-dropdown-content">
-			<a href="/../2048/2048.html">2048</a>
+			<a href="~/2048/2048.html">2048</a>
 			<a href="#">WIP</a>
 		</div>
 	</div>
