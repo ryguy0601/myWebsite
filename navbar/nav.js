@@ -3,29 +3,31 @@ document.getElementsByTagName(
 )[0].innerHTML += `<link rel="stylesheet" href="/navbar/nav.css">`;
 
 
-document.getElementById("nav").innerHTML=`
-<nav class="navbar">
-	<a href="/main/index.html">Home</a>
-	<div class="nav-dropdown">
-		<button class="nav-dropbtn">Games</button>
-		<div class="nav-dropdown-content">
-			<a href="/2048/2048.html">2048</a>
-			<a href="#">WIP</a>
-		</div>
-	</div>
-</nav>
-`
+// document.getElementById("nav").innerHTML= nav.html
+
+// `
+// <nav class="navbar">
+// 	<a href="/main/index.html">Home</a>
+// 	<div class="nav-dropdown">
+// 		<button class="nav-dropbtn">Games</button>
+// 		<div class="nav-dropdown-content">
+// 			<a href="/2048/2048.html">2048</a>
+// 			<a href="/chess/chess.html">Chess(WIP)</a>
+// 		</div>
+// 	</div>
+// </nav>
+// `
 
 
-// fetch("/navbar/nav.html")
-// 	.then((response) => response.text())
-// 	.then((data) => {
-// 		document.getElementById("nav").innerHTML = data;
-// 		console.log(data)
-// 	})
-// 	.catch((error) => {
-// 		console.error("Error:", error);
-// 	});
+fetch("/navbar/nav.html")
+	.then((response) => response.text())
+	.then((data) => {
+		document.getElementById("nav").innerHTML = data;
+		console.log(data)
+	})
+	.catch((error) => {
+		console.error("Error:", error);
+	});
 
 // console.log(1)
 // (async function(){
