@@ -1,6 +1,6 @@
 document.getElementsByTagName(
 	"head"
-)[0].innerHTML += `<link rel="stylesheet" href="/navbar/nav.css">`;
+)[0].innerHTML += `<link rel="stylesheet" href="../navbar/nav.css">`;
 
 
 // document.getElementById("nav").innerHTML= nav.html
