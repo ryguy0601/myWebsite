@@ -19,7 +19,7 @@ document.getElementsByTagName(
 // `
 
 
-fetch("/navbar/nav.html")
+fetch("nav.html")
 	.then((response) => response.text())
 	.then((data) => {
 		document.getElementById("nav").innerHTML = data;
