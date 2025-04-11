@@ -4,6 +4,16 @@ let merged = Array.from({ length: 4 }, () => Array(4).fill(false));
 let tile = document.querySelector(`#cord-${0}-${0}`);
 let scoreDisplay = document.querySelector('#score');
 
+// for touch detection
+document.addEventListener("touchstart", handleTouchStart, false);
+document.addEventListener("touchmove", handleTouchMove, false);
+document.addEventListener("touchend", handleTouchEnd, false);
+
+let xDown = null;
+let yDown = null;
+let xDiff = null;
+let yDiff = null;
+
 function restart() {
     board = [
         [0, 0, 0, 0],
