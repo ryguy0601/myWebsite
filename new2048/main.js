@@ -172,6 +172,12 @@ function handleArrowKey(direction) {
     if (moved !== null) {
         addNum(); // Add a new number if a move was made
     }
+    if (loseCheck()) {
+        console.log("lose");
+        scoreDisplay.innerHTML = `Score: ${score}<br> <span style='color:red'>You lose!</span>`;
+        drawBoard();
+        
+    }
 }
 
 document.addEventListener('keyup', (event) => {
@@ -188,12 +194,6 @@ document.addEventListener('keyup', (event) => {
         case 'ArrowRight':
             handleArrowKey('right');
             break;
-    }
-    if (loseCheck()) {
-        console.log("lose");
-        scoreDisplay.innerHTML = `Score: ${score}<br> <span style='color:red'>You lose!</span>`;
-        drawBoard();
-        
     }
 });
 
