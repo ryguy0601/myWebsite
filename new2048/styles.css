@@ -46,11 +46,13 @@ body {
 
 
 #game {
+  scale: .95;
   width: 80vmin;
   height: 80vmin;
   background-color: #333;
   border-radius: 10px;
   padding: 25px;
+  padding-top: 50px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
@@ -59,7 +61,10 @@ body {
 
 }
 
+
+
 .tile {
+  aspect-ratio: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,6 +78,7 @@ body {
 }
 
 #grid {
+  scale: .95;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(4, 1fr);
@@ -82,8 +88,16 @@ body {
   background-color: #222;
   border-radius: 10px;
   border: solid 15px #222;
-  box-shadow: 0 0 40px rgba(238, 0, 255, 0.5);
+  box-shadow: 0 0 40px #ee00ff80;
 
+}
+
+#scoreContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  translate: 0 10px;
 }
 
 #score {
@@ -92,6 +106,41 @@ body {
   margin-top: 10px;
   margin-bottom: 10px;
   text-align: center;
+  /* transition: transform 0.3s ease, color 0.3s ease; */
+}
+
+#addedScoreHolder {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: flex-end; /* Align content to the bottom */
+  text-align: center;
+  position: relative;
+  height: 100px; /*Fixed height to prevent it from growing */
+}
+
+.addedScore {
+  font-size: calc(2em + 2vmin);
+  color: #ee00ff80;
+  /* margin-top: 10px;
+  margin-bottom: 10px; */
+  text-align: center;
+  transition: transform 0.3s ease-in-out, color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+  bottom: 0; /* Align to the bottom of the container */
+  transform: translateY(-50%);
+  animation: fadeOut 1.25s forwards;
+
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+  100% {
+    scale: 0.85;
+    opacity: 0;
+    transform: translateY(-100%);
+  }
 }
 
 .tile-2 {

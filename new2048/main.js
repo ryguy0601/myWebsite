@@ -3,6 +3,7 @@ let score = 0;
 let merged = Array.from({ length: 4 }, () => Array(4).fill(false));
 let tile = document.querySelector(`#cord-${0}-${0}`);
 let scoreDisplay = document.querySelector('#score');
+let scoreAdded = document.querySelector('#addedScoreHolder');
 
 // for touch detection
 document.addEventListener("touchstart", handleTouchStart, false);
@@ -104,7 +105,6 @@ function addNum() {
     }else{
         console.log("You lose");
         scoreDisplay.innerText = `Score: ${score} - You lose!`;
-        // return;
     }
     drawBoard();
 }
@@ -123,7 +123,8 @@ function moveMerge(x, y, x1, y1, moved) {
             merged[x+x1][y+y1] = true; // Mark as merged
             board[x][y] = 0;
             moved = board[x+x1][y+y1];//tacks the val of the move tile and is also cheking if the tile was moved or merged
-            score += moved;
+            updateScore(moved);
+            
             // console.log(score);
             
         }
@@ -131,6 +132,24 @@ function moveMerge(x, y, x1, y1, moved) {
     return moved;
 }
 
+// Update the score display with animation
+function updateScore(newScore) {
+    // animateScoreUpdate(newScore);
+    // Add the score to the scoreAdded element
+    let newScoreDiv = document.createElement('div');
+    newScoreDiv.className = 'addedScore';
+    newScoreDiv.innerText = `+${newScore}`;
+    scoreAdded.appendChild(newScoreDiv);
+
+    setTimeout(() => {
+        // newScoreDiv.style.opacity = '0';
+        scoreAdded.removeChild(newScoreDiv);
+    }, 1010);
+
+
+    // Add the score to the total score
+    score += newScore;
+}
 // Handle arrow key functionality
 function handleArrowKey(direction) {
     let moved = null; // Track if any tile was moved
