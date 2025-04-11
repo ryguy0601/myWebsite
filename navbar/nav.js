@@ -23,8 +23,8 @@ fetch("../navbar/nav.html")
 	.then((response) => response.text())
 	.then((data) => {
 		document.getElementById("nav").innerHTML = data;
-		console.log("cheese")
-		console.log(data)
+		// console.log("cheese")
+		// console.log(data)
 	})
 	.catch((error) => {
 		console.error("Error:", error);

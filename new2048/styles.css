@@ -1,0 +1,174 @@
+:root {
+  --tile-background: #333333;
+  --lightTxtcol: #eaeaea;
+  --2-col: #b8b8b8;
+  --4-col: #d0d0d0;
+  --8-col: #c4a484;
+  --16-col: #b38b6d;
+  --32-col: #8e6c9d;
+  --64-col: #5a5478;
+  --128-col: #7fa97a;
+  --256-col: #4e7d4e;
+  --512-col: #3a5a3a;
+  --1024-col: #ff5a4a;
+  --2048-col: #c71f2e;
+}
+
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overscroll-behavior: none;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #222;
+}
+
+#restartButton {
+  background-color: #444;
+  color: var(--lightTxtcol);
+  border: none;
+  border-radius: 5px;
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: calc(1em + 1vmin);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+#restartButton:hover {
+  background-color: #555;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+}
+
+
+#game {
+  width: 80vmin;
+  height: 80vmin;
+  background-color: #333;
+  border-radius: 10px;
+  padding: 25px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: calc(2em + 1vmin);
+  font-weight: bold;
+  background-color: var(--tile-background);
+  border-radius: 10px;
+  /* transition: all 0.2s ease-in-out; */
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  -webkit-text-stroke: 2px #000; /* Adds a text border */
+}
+
+#grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 15px;
+  width: 95%;
+  height: 95%;
+  background-color: #222;
+  border-radius: 10px;
+  border: solid 15px #222;
+  box-shadow: 0 0 40px rgba(238, 0, 255, 0.5);
+
+}
+
+#score {
+  font-size: calc(2em + 2vmin);
+  color: #fff;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.tile-2 {
+  
+  background: radial-gradient(circle, var(--tile-background) 65%, var(--2-col));
+  box-shadow: 0 0 10px var(--2-col);
+  color: var(--2-col);
+
+
+}
+.tile-4 {
+  background: radial-gradient(circle, var(--tile-background) 65%, var(--4-col));
+  box-shadow: 0 0 10px var(--4-col);
+  color: var(--4-col);
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  -webkit-text-stroke: 2px #000; 
+}
+.tile-8 {
+  background: radial-gradient(circle, var(--tile-background) 65%, var(--8-col));
+  box-shadow: 0 0 10px var(--8-col);
+  color: var(--8-col);
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  -webkit-text-stroke: 2px #000; 
+}
+.tile-16 {
+  background: radial-gradient(circle, var(--tile-background) 65%, var(--16-col));
+  box-shadow: 0 0 10px var(--16-col);
+  color: var(--16-col);
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  -webkit-text-stroke: 2px #000; 
+}
+.tile-32 {
+  background: radial-gradient(circle, var(--tile-background) 65%, var(--32-col));
+  box-shadow: 0 0 10px var(--32-col);
+  color: var(--32-col);
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  -webkit-text-stroke: 2px #000; 
+}
+.tile-64 {
+  background: radial-gradient(circle, var(--tile-background) 65%, var(--64-col));
+  box-shadow: 0 0 10px var(--64-col);
+  color: var(--64-col);
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  -webkit-text-stroke: 2px #000; 
+}
+.tile-128 {
+  background: radial-gradient(circle, var(--tile-background) 65%, var(--128-col));
+  box-shadow: 0 0 10px var(--128-col);
+  color: var(--128-col);
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  -webkit-text-stroke: 2px #000; 
+}
+.tile-256 {
+  background: radial-gradient(circle, var(--tile-background) 65%, var(--256-col));
+  box-shadow: 0 0 10px var(--256-col);
+  color: var(--256-col);
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  -webkit-text-stroke: 2px #000; 
+}
+.tile-512 {
+  background: radial-gradient(circle, var(--tile-background) 65%, var(--512-col));
+  box-shadow: 0 0 10px var(--512-col);
+  color: var(--512-col);
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  -webkit-text-stroke: 2px #000; 
+}
+.tile-1024 {
+  background: radial-gradient(circle, var(--tile-background) 65%, var(--1024-col));
+  box-shadow: 0 0 10px var(--1024-col);
+  color: var(--1024-col);
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  -webkit-text-stroke: 2px #000; 
+}
+.tile-2048 {
+  background: radial-gradient(circle, var(--tile-background) 65%, var(--2048-col));
+  box-shadow: 0 0 10px var(--2048-col);
+  color: var(--2048-col);
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+  -webkit-text-stroke: 2px #000; 
+}
