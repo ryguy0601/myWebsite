@@ -48,7 +48,6 @@ function loseCheck() {
             }
         }
     }
-    console.log("loseCheck");
     return lose(); // No zeros found, call the lose function
 }
 
@@ -103,7 +102,7 @@ function addNum() {
         const tile = document.querySelector(`#cord-${x}-${y}>div`);
         animateAddNum(tile);
     } else {
-        console.log("You lose");
+        // console.log("You lose");
         scoreDisplay.innerText = `Score: ${score} - You lose!`;
     }
     drawBoard();
@@ -146,14 +145,14 @@ function animateTileMove(tile, targetY, targetX) {
     const startY = tile.offsetTop;
     const endX = startX + targetX * (tile.offsetWidth + 15);
     const endY = startY + targetY * (tile.offsetHeight + 15);
-    console.log(targetX, startX, endX);
-    console.log(targetY, startY, endY);
+    // console.log(targetX, startX, endX);
+    // console.log(targetY, startY, endY);
     
     let tileCol = tile.className.split('-').pop(); // Get the last part of the class name
     tileCol = `var(--${tileCol}-col)`; // Construct the color variable name
 
-    console.log(targetX, targetY);
-    console.log(tile);
+    // console.log(targetX, targetY);
+    // console.log(tile);
     
     tile.style.transition = 'transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease';
     tile.style.transform = `translate(${endX - startX}px, ${endY - startY}px)`;
@@ -312,7 +311,7 @@ function handleArrowKey(direction) {
     }
 
     if (loseCheck()) {
-        console.log("lose");
+        // console.log("lose");
         scoreDisplay.innerHTML = `Score: ${score}<br> <span style='color:red'>You lose!</span>`;
         drawBoard();
     }
