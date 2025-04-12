@@ -1,17 +1,17 @@
 :root {
   --tile-background: #333333;
   --lightTxtcol: #eaeaea;
-  --2-col: #b8b8b8;
-  --4-col: #d0d0d0;
-  --8-col: #c4a484;
-  --16-col: #b38b6d;
-  --32-col: #8e6c9d;
-  --64-col: #5a5478;
-  --128-col: #7fa97a;
-  --256-col: #4e7d4e;
-  --512-col: #3a5a3a;
-  --1024-col: #ff5a4a;
-  --2048-col: #c71f2e;
+  --2-col: #f0f0f0;
+  --4-col: #ffe4b5;
+  --8-col: #ffcc80;
+  --16-col: #ff9966;
+  --32-col: #ff6699;
+  --64-col: #cc66ff;
+  --128-col: #66ccff;
+  --256-col: #66ffcc;
+  --512-col: #66ff66;
+  --1024-col: #ffcc00;
+  --2048-col: #ff4500;
 }
 
 
@@ -61,9 +61,14 @@ body {
 
 }
 
-
-
 .tile {
+  background-color: var(--tile-background);
+  color: var(--lightTxtcol);
+  border-radius: 10px;
+}
+
+.tile > *{
+  z-index: 1;
   aspect-ratio: 1;
   display: flex;
   justify-content: center;
@@ -75,6 +80,8 @@ body {
   /* transition: all 0.2s ease-in-out; */
   text-shadow: 0 0 5px #fff, 0 0 10px #fff;
   -webkit-text-stroke: 2px #000; /* Adds a text border */
+  animation-name: moveTile;
+  animation-duration: 0.75s;
 }
 
 #grid {
@@ -97,7 +104,13 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  translate: 0 10px;
+  translate: 0 1.1em;
+  background-color: #333;
+  border-radius: 10px;
+  padding: 10px;
+  padding-bottom: 0%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  width: 75%;
 }
 
 #score {
@@ -127,19 +140,28 @@ body {
   text-align: center;
   transition: transform 0.3s ease-in-out, color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
   bottom: 0; /* Align to the bottom of the container */
-  transform: translateY(-50%);
+  /* transform: translateY(-50%),translateX(400%); */
   animation: fadeOut 1.25s forwards;
 
 }
 @keyframes fadeOut {
   0% {
     opacity: 1;
-    transform: translateY(-50%) scale(1);
+    transform: translateY(-50%) translateX(-50%) scale(1);
   }
   100% {
     scale: 0.85;
     opacity: 0;
-    transform: translateY(-100%);
+    transform: translateY(-100%) translateX(150%);
+  }
+}
+
+@keyframes moveTile {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(var(--v), var(--h));
   }
 }
 
@@ -148,8 +170,6 @@ body {
   background: radial-gradient(circle, var(--tile-background) 65%, var(--2-col));
   box-shadow: 0 0 10px var(--2-col);
   color: var(--2-col);
-
-
 }
 .tile-4 {
   background: radial-gradient(circle, var(--tile-background) 65%, var(--4-col));

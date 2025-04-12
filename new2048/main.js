@@ -37,9 +37,6 @@ window.onload = function () {
     restart();
 }
 
-
-
-
 function loseCheck() {
     // Check if there are any zeros on the board
     for (let x = 0; x < board.length; x++) {
@@ -92,44 +89,90 @@ function randomNum(min, max) {
 
 
 function addNum() {
-    //adds a random number to the board
-    if(!loseCheck()){
+    // Adds a random number to the board with animation
+    if (!loseCheck()) {
         let x = randomNum(0, 4);
         let y = randomNum(0, 4);
         while (board[x][y] != 0) {
             x = randomNum(0, 4);
             y = randomNum(0, 4);
         }
-        // console.log(0);
-        board[x][y] = Math.random() < 0.5 ? 2 : 4;// 50% chance of 2 or 4
-    }else{
+        board[x][y] = Math.random() < 0.5 ? 2 : 4; // 50% chance of 2 or 4
+
+        // Animate the new tile
+        const tile = document.querySelector(`#cord-${x}-${y}>div`);
+        animateAddNum(tile);
+    } else {
         console.log("You lose");
         scoreDisplay.innerText = `Score: ${score} - You lose!`;
     }
     drawBoard();
 }
+function animateAddNum(tile) {
+    tile.style.transition = 'transform 0.3s ease';
+    tile.style.transform = 'scale(0)';
 
-function moveMerge(x, y, x1, y1, moved) {
-    if(board[x][y] !== 0){
-        if(board[x+x1][y+y1] == 0){//this if moves tiles
-            moved = board[x][y];//tacks the val of the move tile and is also cheking if the tile was moved or merged
-            board[x][y] = 0;
-            board[x+x1][y+y1] = moved;
-        }else if(//this if merges tiles
-            board[x+x1][y+y1] == board[x][y] &&
-            !merged[x+x1][y+y1] && !merged[x][y] // Check if the tile has already merged
-        ){
-            board[x+x1][y+y1] *= 2
-            merged[x+x1][y+y1] = true; // Mark as merged
-            board[x][y] = 0;
-            moved = board[x+x1][y+y1];//tacks the val of the move tile and is also cheking if the tile was moved or merged
-            updateScore(moved);
-            
-            // console.log(score);
-            
-        }
-    }
-    return moved;
+    setTimeout(() => {
+        tile.style.transform = 'scale(.5)';
+        setTimeout(() => {
+            tile.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                tile.style.transform = 'scale(1)';
+            }, 150);
+        }, 50);
+    }, 50);
+}
+
+function animateMerge(tile) {
+    tile.style.transition = 'transform .5s ease, background 0.5s ease, box-shadow 0.5s ease';
+    // tile.style.transform = 'scale(1.5)';
+    tile.style.transform = ` scale(1.25)`;
+
+    tile.style.zIndex = '10'; // Bring the tile to the front for visibility
+    let tileCol = tile.className.split('-').pop(); // Get the last part of the class name
+    tileCol = `var(--${tileCol*2}-col)`; // Construct the color variable name
+    tile.style.background = `radial-gradient(circle, transparent, ${tileCol})`; // Highlight the fusion effect
+
+    setTimeout(() => {
+        tile.style.transform = 'scale(1)';
+        tile.style.zIndex = '1'; // Reset z-index
+        tile.style.background = ''; // Reset background
+    }, 500);
+}
+
+function animateTileMove(tile, targetY, targetX) {
+    if (tile.className.includes('tile-0')) return;
+    const startX = tile.offsetLeft;
+    const startY = tile.offsetTop;
+    const endX = startX + targetX * (tile.offsetWidth + 15);
+    const endY = startY + targetY * (tile.offsetHeight + 15);
+    console.log(targetX, startX, endX);
+    console.log(targetY, startY, endY);
+    
+    let tileCol = tile.className.split('-').pop(); // Get the last part of the class name
+    tileCol = `var(--${tileCol}-col)`; // Construct the color variable name
+
+    console.log(targetX, targetY);
+    console.log(tile);
+    
+    tile.style.transition = 'transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease';
+    tile.style.transform = `translate(${endX - startX}px, ${endY - startY}px)`;
+    tile.style.zIndex = '-10'; // Bring the tile to the front for visibility
+    tile.style.background = `radial-gradient(circle, transparent 65%, ${tileCol}`; // Change color for visibility
+    tile.style.boxShadow = `0 0 10px ${tileCol}`; // Add shadow for visibility
+    tile.style.color = tileCol; // Change text color for visibility
+    tile.style.opacity = '0.5'; // Change opacity for visibility
+
+    // Reset styles after animation
+    setTimeout(() => {
+        tile.style.transition = '';
+        tile.style.transform = '';
+        tile.style.zIndex = '1';
+        tile.style.background = '';
+        tile.style.boxShadow = '';
+        tile.style.color = '';
+        tile.style.opacity = '1'; // Reset opacity
+    }, 200);
 }
 
 // Update the score display with animation
@@ -144,60 +187,137 @@ function updateScore(newScore) {
     setTimeout(() => {
         // newScoreDiv.style.opacity = '0';
         scoreAdded.removeChild(newScoreDiv);
-    }, 1010);
+    }, 500);
 
 
     // Add the score to the total score
     score += newScore;
 }
+
 // Handle arrow key functionality
 function handleArrowKey(direction) {
-    let moved = null; // Track if any tile was moved
-    merged = Array.from({ length: 4 }, () => Array(4).fill(false)); // Track if a tile has merged
+    let moved = false; // Track if any tile was moved
+    merged = Array.from({ length: 4 }, () => Array(4).fill(false)); // Reset merged tracking
 
     if (direction === 'up') {
-		for (let i = 0; i < board.length; i++) {
-			for (let x = 1; x < board.length; x++) {
-				for (let y = 0; y < board.length; y++) {
-                    moved = moveMerge(x, y, -1, 0, moved);
+        for (let y = 0; y < board.length; y++) {
+            for (let x = 1; x < board.length; x++) {
+                if (board[x][y] !== 0) {
+                    let targetX = x;
+                    while (targetX > 0 && board[targetX - 1][y] === 0) {
+                        targetX--;
+                    }
+                    let tile = document.querySelector(`#cord-${x}-${y}>div`);
+                    if (targetX > 0 && board[targetX - 1][y] === board[x][y] && !merged[targetX - 1][y]) {
+                        board[targetX - 1][y] *= 2;
+                        merged[targetX - 1][y] = true;
+                        board[x][y] = 0;
+                        updateScore(board[targetX - 1][y]);
+                        moved = true;
+                        // animateTileMove(tile, targetX - x, 0);
+                        let targetTile = document.querySelector(`#cord-${targetX - 1}-${y}>div`);
+                        animateMerge(targetTile);
+                    } else if (targetX !== x) {
+                        animateTileMove(tile, targetX - x, 0);
+                        board[targetX][y] = board[x][y];
+                        board[x][y] = 0;
+                        moved = true;
+                    }
                 }
             }
         }
     } else if (direction === 'down') {
-		for (let i = 0; i < board.length; i++) {
-			for (let x = board.length - 2; x > -1; x--) {
-				for (let y = 0; y < board.length; y++) {
-                    moved = moveMerge(x, y, 1, 0, moved);
+        for (let y = 0; y < board.length; y++) {
+            for (let x = board.length - 2; x >= 0; x--) {
+                if (board[x][y] !== 0) {
+                    let targetX = x;
+                    while (targetX < board.length - 1 && board[targetX + 1][y] === 0) {
+                        targetX++;
+                    }
+                    let tile = document.querySelector(`#cord-${x}-${y}>div`);
+                    if (targetX < board.length - 1 && board[targetX + 1][y] === board[x][y] && !merged[targetX + 1][y]) {
+                        board[targetX + 1][y] *= 2;
+                        merged[targetX + 1][y] = true;
+                        board[x][y] = 0;
+                        updateScore(board[targetX + 1][y]);
+                        moved = true;
+                        let targetTile = document.querySelector(`#cord-${targetX + 1}-${y}>div`);
+                        animateMerge(targetTile);
+                    } else if (targetX !== x) {
+                        animateTileMove(tile, targetX - x, 0);
+                        board[targetX][y] = board[x][y];
+                        board[x][y] = 0;
+                        moved = true;
+                    }
                 }
             }
         }
     } else if (direction === 'left') {
-		for (let i = 0; i < board.length; i++) {
-			for (let x = 0; x < board.length; x++) {
-				for (let y = 1; y < board.length; y++) {
-                    moved = moveMerge(x, y, 0, -1, moved);
+        for (let x = 0; x < board.length; x++) {
+            for (let y = 1; y < board.length; y++) {
+                if (board[x][y] !== 0) {
+                    let targetY = y;
+                    while (targetY > 0 && board[x][targetY - 1] === 0) {
+                        targetY--;
+                    }
+                    let tile = document.querySelector(`#cord-${x}-${y}>div`);
+                    if (targetY > 0 && board[x][targetY - 1] === board[x][y] && !merged[x][targetY - 1]) {
+                        board[x][targetY - 1] *= 2;
+                        merged[x][targetY - 1] = true;
+                        board[x][y] = 0;
+                        updateScore(board[x][targetY - 1]);
+                        moved = true;
+                        let targetTile = document.querySelector(`#cord-${x}-${targetY-1}>div`);
+                        animateMerge(targetTile);
+                    } else if (targetY !== y) {
+                        animateTileMove(tile, 0, targetY - y);
+                        board[x][targetY] = board[x][y];
+                        board[x][y] = 0;
+                        moved = true;
+                    }
                 }
             }
         }
     } else if (direction === 'right') {
-		for (let i = 0; i < board.length; i++) {
-			for (let x = 0; x < board.length; x++) {
-				for (let y = board.length - 2; y > -1; y--) {
-                    moved = moveMerge(x, y, 0, 1, moved);
+        for (let x = 0; x < board.length; x++) {
+            for (let y = board.length - 2; y >= 0; y--) {
+                if (board[x][y] !== 0) {
+                    let targetY = y;
+                    while (targetY < board.length - 1 && board[x][targetY + 1] === 0) {
+                        targetY++;
+                    }
+                    let tile = document.querySelector(`#cord-${x}-${y}>div`);
+                    if (targetY < board.length - 1 && board[x][targetY + 1] === board[x][y] && !merged[x][targetY + 1]) {
+                        board[x][targetY + 1] *= 2;
+                        merged[x][targetY + 1] = true;
+                        board[x][y] = 0;
+                        updateScore(board[x][targetY + 1]);
+                        moved = true;
+                        let targetTile = document.querySelector(`#cord-${x}-${targetY+1}>div`);
+                        animateMerge(targetTile);
+                    } else if (targetY !== y) {
+                        animateTileMove(tile, 0, targetY - y);
+                        board[x][targetY] = board[x][y];
+                        board[x][y] = 0;
+                        moved = true;
+                    }
                 }
             }
         }
     }
-    if (moved !== null) {
+
+    if (moved) {
         addNum(); // Add a new number if a move was made
+        drawBoard(); // Redraw the board
     }
+
     if (loseCheck()) {
         console.log("lose");
         scoreDisplay.innerHTML = `Score: ${score}<br> <span style='color:red'>You lose!</span>`;
         drawBoard();
-        
     }
 }
+
 
 document.addEventListener('keyup', (event) => {
     switch (event.key) {
@@ -223,8 +343,8 @@ function drawBoard() {
     // scoreDisplay.innerText = `Score: ${score}`;
     for (let x = 0; x < board.length; x++) {
         for (let y = 0; y < board[x].length; y++) {
-            tile = document.querySelector(`#cord-${x}-${y}`);
-            tile.className = `tile tile-${board[x][y]}`;
+            tile = document.querySelector(`#cord-${x}-${y}>div`);
+            tile.className = `tile-${board[x][y]}`;
             tile.innerText = board[x][y] !== 0 ? board[x][y] : '';
         }
         
