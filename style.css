@@ -1,5 +1,16 @@
+
+:root{
+	--color-txt: #ffffff;
+	--color-bg:#222222;
+}
+
+.light-mode {
+	--color-txt: #333333; 
+	--color-bg:#f8f8f8;
+}
+
 body,
 html {
-	background: #222;
-	color: #fff;
+	background: var(--color-bg);
+	color: var(--color-txt);
 }

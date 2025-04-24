@@ -1,7 +1,19 @@
+:root {
+	--color-bg: #222;
+	--color-fg: #fff;
+	--color-accent: #ff00ff;
+}
+
+.light-mode {
+	--color-bg: #fff;
+	--color-fg: #222;
+	--color-accent: #ff00ff;
+}
+
 body,
 html {
-	background: #222;
-	color: #fff;
+	background:var(--color-bg);
+	color: var(--color-fg);
 	overscroll-behavior: none;
 }
 
@@ -9,8 +21,8 @@ html {
 	width: 55%;
 	aspect-ratio: 5/4;
 
-	border: 10px double #ff00ff;
-	background: #000;
+	border: 10px double var(--color-accent);
+	background: transparent;
 
 	border-radius: 10%;
 }
