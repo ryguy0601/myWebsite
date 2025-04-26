@@ -16,23 +16,23 @@ let xDiff = null;
 let yDiff = null;
 
 function restart() {
-    board = [//testing board
-        [2, 2, 4, 8],
-        [128, 64, 32, 16],
-        [256, 512, 1024, 2048],
-        [0, 0, 0, 0]
-    ];
-    // board = [
-    //     [0, 0, 0, 0],
-    //     [0, 0, 0, 0],
-    //     [0, 0, 0, 0],
+    // board = [//testing board
+    //     [2, 2, 4, 8],
+    //     [128, 64, 32, 16],
+    //     [256, 512, 1024, 2048],
     //     [0, 0, 0, 0]
     // ];
+    board = [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ];
     score = 0;
     merged = Array.from({ length: 4 }, () => Array(4).fill(false));
     drawBoard();
-    // addNum()
-    // addNum()
+    addNum()
+    addNum()
 }
 
 document.querySelector('#restartButton').addEventListener('click', restart);
