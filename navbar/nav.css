@@ -137,6 +137,8 @@
 }
 
 .nav-dropdown .nav-dropbtn {
+	float: none;
+	display: inline-block;
 	font-size: 16px;
 	border: none;
 	outline: none;
