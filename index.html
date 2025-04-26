@@ -8,10 +8,10 @@
 		<link rel="stylesheet" href="./navbar/nav.css" />
 	</head>
 	<body>
-		
+
 		<div id="nav">
 			<nav class="navbar">
-				<a href="./index.html">Home</a>
+				<a href="../index.html">Home</a>
 				<div class="nav-dropdown">
 					<button class="nav-dropbtn"> About Me ▼</button>
 					<div class="nav-dropdown-content">
@@ -26,8 +26,18 @@
 					<div class="nav-dropdown-content">
 						<a href="./2048/2048.html">2048</a>
 						<a href="./new2048/2048.html">new 2048</a>
-						<a href="./chess/chess.html">Chess(WIP)</a>
+						<!--<a href="./chess/chess.html">Chess(WIP)</a>-->
 						<a href="./tetris/tetris.html">tetris(WIP)</a>
+					</div>
+				</div>
+				<div class="nav-dropdown">
+					<button class="nav-dropbtn">Settings ▼</button>
+					<div class="nav-dropdown-content">
+						<label for="themeToggle" class="toggleLabel" id="themeToggleLabel">
+							Dark Mode
+							<input type="checkbox" class="toggle" id="themeToggle">
+							<span class="slider"></span>
+						</label>
 					</div>
 				</div>
 			</nav>
@@ -35,6 +45,7 @@
 
 		<h1>The best song:</h1>
 		<iframe width="560" height="315" src="https://www.youtube.com/embed/QPWWa6--lN8?si=6HEAfBp204KKfPa4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		
 		<script src="scripts.js"></script>
 		<footer>
 			<div class="social-links">
