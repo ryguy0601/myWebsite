@@ -1,0 +1,80 @@
+:root{
+    --bg-Color:rgb(34, 34, 34);
+    --text-Color:rgb(255, 255, 255);
+    --accent-Color:rgb(121, 13, 129);
+    --graph-Axis-Color:rgba(255, 255, 255, 0.5);
+    --graph-bg-Color:rgb(0, 0, 0);
+}
+
+.light-mode{
+    --bg-Color:#ffffff;
+}
+
+
+#myChart{
+    /* padding: 20px; */
+    margin: 0px 20px;
+    width: 100%;
+    height: 100%;
+    background-color: var(--graph-bg-Color);
+    border-radius: 5px;
+    box-shadow: 0 0 5px var(--graph-Axis-Color);
+}
+
+html,body{
+    background-color: var(--bg-Color);
+    color: #ffffff;
+}
+
+
+.container{
+    position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+    flex-direction: row;
+    display: flex;
+}
+
+.inputContainer{
+
+    flex-direction: column;
+    display: flex;
+}
+
+button {
+  background-color: #333333; /* Dark button background */
+  color: #d4d4d4; /* Light button text */
+  border-radius: 5px;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #444444; /* Slightly lighter dark button on hover */
+}
+
+input {
+  background-color: #333333; /* Dark input background */
+  color: #d4d4d4; /* Light input text */
+  border-radius: 5px;
+  border: 1px solid #555555; /* Subtle dark border for better definition */
+  padding: 10px 15px; /* Adjust padding for visual balance */
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+input::placeholder {
+  color: #777777; /* Darker placeholder text */
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(220, 220, 220, 0.3); /* Light glow on focus */
+  border-color: var(--accent-Color); /* Subtle focus border color */
+}
+
+
+
