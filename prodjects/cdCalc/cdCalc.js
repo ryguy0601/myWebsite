@@ -2,27 +2,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const startAmountInput = document.getElementById('startAmount');
     const apyInput = document.getElementById('apy');
     const timeInput = document.getElementById('time');
-    const calculateButton = document.getElementById('calculate');
     const clearButton = document.getElementById('clear');
     const chartCanvas = document.getElementById('myChart');
     const ctx = chartCanvas.getContext('2d');
     let myChart; // To store the chart instance
 
+   
 
-    //todo add decimals to the input fields
-    // const numberInputs = document.querySelectorAll('input[type="number"]'); // Select all text inputs
 
-    // numberInputs.forEach(input => {
-    //     input.addEventListener('input', function() {
-    //         console.log(`Input value changed: ${this.value}`);
-    //         this.value = this.value.replace(/[^0-9 ]/g, ''); // Keep only numbers
-    //     });
-    // });
+    //todo only nums in input feilds
+    //const numberInputs = document.querySelectorAll('input[type="number"]');
+
+    //numberInputs.forEach(input => {
+    //    input.addEventListener('input', () => {
+    //        let value = input.value;
+    //        let val2 = ''
+    //        value.split('').forEach(char => {
+    //            console.log(char)
+    //            char = char.replace(/[^0-9.]/g, '');
+    //            if (char === '.' && val2.includes('.')) {
+    //                char = ''
+    //            }
+    //            val2 += char;
+    //        });
+    //        console.log(val2);
+    //        //input.value = val2;
+
+    //    });
+    //});
+
 
 
     function getCSSVar(propertyName) {
-        // console.log(`Getting CSS variable: ${propertyName}`);
-        // console.log( getComputedStyle(document.documentElement).getPropertyValue(propertyName).trim());
+        //  console.log(`Getting CSS variable: ${propertyName}`);
+        //  console.log( getComputedStyle(document.documentElement).getPropertyValue(propertyName).trim());
         return getComputedStyle(document.documentElement).getPropertyValue(propertyName).trim();
     }
 
@@ -129,11 +142,15 @@ document.addEventListener('DOMContentLoaded', () => {
             myChart.destroy(); // Clear the chart
             myChart = null;
         }
+        calculateCD();
+
     }
 
-    calculateButton.addEventListener('click', calculateCD);
     clearButton.addEventListener('click', clearInputs);
     startAmountInput.addEventListener('input', calculateCD);
     apyInput.addEventListener('input', calculateCD);
     timeInput.addEventListener('input', calculateCD);
+
+    calculateCD();
 });
+

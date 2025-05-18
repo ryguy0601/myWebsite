@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Tip Calculator</h1>
+
+    <label for="numServers">Number of Servers:
+        <input type="number" id="numServers" placeholder="Number of servers" min="0">
+    </label>
+    <br><br><br>
+    <table border="1">
+        <tbody id="serverTable">
+        </tbody>
+    </table>
+
+    <br><br>
+
+    <label for="numBartenders">Number of Bartenders:
+        <input type="number" id="numBartenders" placeholder="Number of bartenders" min="0">
+    </label>
+    <br><br><br>
+    <table border="1">
+        <tbody id="bartenderTable">
+        </tbody>
+    </table>
+
+    <br><br>
+
+    <h1>
+        Total Sales for the day: $<span id="TotalSalesForDay">0</span>
+        <br>
+        Total Tips for the day: &nbsp;$<span id="TotalTipsForDay">0</span>
+    </h1>
+
+    <label for="numBarBacks">Number of Bar Backs:
+        <input type="number" id="numBarBacks" placeholder="Number of Bar Backs" min="0">
+    </label>
+    <br>
+    <label for="barBackTipPercent">Tip Percent for Bar Backs:
+        <input type="number" id="barBackTipPercent" placeholder="Tip Percent for Bar Backs" min="0" style="width:3em" step=".1">%
+    </label>
+    <br><br><br>
+    <table border="1">
+        <tbody id="barBackTable">
+        </tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

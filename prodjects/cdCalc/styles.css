@@ -1,73 +1,93 @@
 :root{
-    --bg-Color:rgb(34, 34, 34);
-    --text-Color:rgb(255, 255, 255);
-    --accent-Color:rgb(121, 13, 129);
-    --graph-Axis-Color:rgba(255, 255, 255, 0.5);
-    --graph-bg-Color:rgb(0, 0, 0);
+	--bg-Color:rgb(34, 34, 34);
+	--text-Color:rgb(255, 255, 255);
+	--accent-Color:rgb(121, 13, 129);
+	--graph-Axis-Color:rgba(255, 255, 255, 0.5);
+	--graph-bg-Color:rgb(0, 0, 0);
+	--btn-bg: #333333;
+	--btn-bg-hover: #444444;
+	--btn-Txt-color: #d4d4d4;
+	--input-bg:#333333;
+	--input-Txt-color:#d4d4d4;
+	--input-border-color:#555555;
+	--input-placeHolder-color:#777777;
 }
 
 .light-mode{
-    --bg-Color:#ffffff;
+	--bg-Color:rgb(255, 255, 255);
+	--text-Color:rgb(34, 34, 34);
+	--accent-Color:rgb(121, 13, 129);
+	--graph-Axis-Color:rgba(0, 0, 0, 1);
+	--graph-bg-Color:rgb(240, 240, 240);
+	--btn-bg: #e0e0e0;
+	--btn-bg-hover: #d4d4d4;
+	--btn-Txt-color: #333333;
+	--input-bg:#f5f5f5;
+	--input-Txt-color:#333333;
+	--input-border-color:#cccccc;
+	--input-placeHolder-color:#999999;
+
 }
 
 
 #myChart{
-    /* padding: 20px; */
-    margin: 0px 20px;
-    width: 100%;
-    height: 100%;
-    background-color: var(--graph-bg-Color);
-    border-radius: 5px;
-    box-shadow: 0 0 5px var(--graph-Axis-Color);
+	/* padding: 20px; */
+	margin: 0px 20px;
+	width: 100%;
+	height: 100%;
+	background-color: var(--graph-bg-Color);
+	border-radius: 5px;
+	box-shadow: 0 0 5px var(--graph-Axis-Color);
 }
 
 html,body{
-    background-color: var(--bg-Color);
-    color: #ffffff;
+	background-color: var(--bg-Color);
+	color: var(--text-Color);
 }
 
 
 .container{
-    position: absolute;
+	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-    flex-direction: row;
-    display: flex;
+	flex-direction: row;
+	display: flex;
 }
 
 .inputContainer{
 
-    flex-direction: column;
-    display: flex;
+	flex-direction: column;
+	display: flex;
 }
 
 button {
-  background-color: #333333; /* Dark button background */
-  color: #d4d4d4; /* Light button text */
+  background-color: var(--btn-bg); /* Dark button background */
+  color: var(--btn-Txt-color); /* Light button text */
   border-radius: 5px;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+  width: 100%;
 }
 
 button:hover {
-  background-color: #444444; /* Slightly lighter dark button on hover */
+  background-color: var(--btn-bg-hover); /* Slightly lighter dark button on hover */
 }
 
 input {
-  background-color: #333333; /* Dark input background */
-  color: #d4d4d4; /* Light input text */
+  background-color: var(--input-bg); /* Dark input background */
+  color: var(--input-Txt-color); /* Light input text */
   border-radius: 5px;
-  border: 1px solid #555555; /* Subtle dark border for better definition */
+  border: 1px solid var(--input-border-color); /* Subtle dark border for better definition */
   padding: 10px 15px; /* Adjust padding for visual balance */
   font-size: 16px;
   margin-bottom: 10px;
 }
 
 input::placeholder {
-  color: #777777; /* Darker placeholder text */
+  color: var(--input-border-color); /* Darker placeholder text */
 }
 
 input:focus {
