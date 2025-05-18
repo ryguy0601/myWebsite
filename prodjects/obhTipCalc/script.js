@@ -23,7 +23,7 @@ function createTransposedTable(num, idPrefix) {
     }
     let rows = [];
     for (let r = 0; r < props.length; r++) {
-        let row = `<tr><th>${props[r].label}</th>`;
+        let row = `<tr><th class='sticky-label'>${props[r].label}</th>`;
         for (let c = 0; c < num; c++) {
             row += `<td>${props[r].input(c)}</td>`;
         }
