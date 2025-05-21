@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Server Checkout Tip Sheet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            max-width: 900px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #eee;
+        }
+
+        .x-row > td {
+            text-align: center;
+            color: red;
+            font-weight: bold;
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Server / Bartender Checkout Tip Sheet</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>servers <br> bartenders</th>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>gross sales</th>
+                <th>cc tips</th>
+                <th>sales tax</th>
+                <th>net sales</th>
+                <th>x .04</th>
+                <th>barback cut</th>
+                <th>BB cash</th>
+                <th>BB CC</th>
+                <th>x .01</th>
+                <th>host</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- AM Section -->
+            <tr>
+                <td rowspan="4"> AM</td>
+                <td><input type="text"></input></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td rowspan="4">x .04</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td rowspan="4">x .01</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="text"></input></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="text"></input></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="text"></input></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- buffer row -->
+            <tr class="x-row">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>TOTAL AM <input type="number"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <!-- PM Section -->
+            <tr>
+                <td rowspan="7"> PM</td>
+                <td><input type="text"></input></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td rowspan="7">x .04</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td rowspan="7">x .01</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="text"></input></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="text"></input></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="text"></input></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="text"></input></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="text"></input></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><input type="text"></input></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <script>
+        document.querySelectorAll('.x-row td').forEach(td => {
+            if (td.textContent.trim() === '') {
+                td.textContent = 'x';
+            }
+        });
+    </script>
+</body>
+</html>

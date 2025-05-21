@@ -7,10 +7,10 @@ function createTransposedTable(num, idPrefix) {
             { label: "End Time", input: () => `<input type="time" class="end-time">` },
             { label: "Total Hours", input: () => `<span class="total-hours"></span>` },
             { label: "Cash Tips", input: () => `<input type="number" class="${idPrefix}CashTip">` },
-            { label: "Credit Card Tips", input: () => `<input type="number" class="${idPrefix}CreditTip">` },
+            { label: "CC Tips", input: () => `<input type="number" class="${idPrefix}CreditTip">` },
             { label: "Tips Towards Pool", input: () => `<span class="totalTips"></span>` },
-            { label: "Total Sales", input: () => `<input type="number" class="totalSales">` },
-            { label: "Total Tips Earned", input: () => `<span class="total-tips-earned"></span>` }
+            { label: "Gross Sales", input: () => `<input type="number" class="totalSales">` },
+            { label: "Total Tips out", input: () => `<span class="total-tips-earned"></span>` }
         ];
     } else {
         props = [
@@ -18,7 +18,9 @@ function createTransposedTable(num, idPrefix) {
             { label: "Start Time", input: () => `<input type="time" class="start-time">` },
             { label: "End Time", input: () => `<input type="time" class="end-time">` },
             { label: "Total Hours", input: () => `<span class="total-hours"></span>` },
-            { label: "Total Tips Earned", input: () => `<span class="total-tips-earned-barback"></span>` },
+            { label: "Total Cash Tips out", input: () => `<span class="total-cash-tips-earned-barback"></span>` },
+            { label: "Total CC Tips out", input: () => `<span class="total-cc-tips-earned-barback"></span>` },
+            { label: "Total Tips out", input: () => `<span class="total-tips-earned-barback"></span>` },
         ];
     }
     let rows = [];
@@ -76,6 +78,8 @@ function addTransposedListeners(tableId, idPrefix) {
         // Calculate total sales
         if (e.target.classList.contains('totalSales')) {
             const sales = document.querySelectorAll(`.totalSales`);
+            const ccTips = document.querySelectorAll(`.${idPrefix}CreditTip`);
+            let totalCC = 0;
             let totalSales = 0;
             sales.forEach((i) => {
                 i.innerText = parseFloat(i.value) || 0;
@@ -151,10 +155,13 @@ function calcBartenderServerTips() {
     let totalTips = parseFloat(document.getElementById(`TotalTipsForDay`).innerText) || 0;
 
     //if there are barbacks, subtract their tips from the total tips
-    if( document.getElementById('numBarBacks').value > 0) {
-        // console.log('Barback tip percent:', document.getElementById('barBackTipPercent').value);
-        totalTips -= parseFloat(document.getElementById(`TotalSalesForDay`).innerText) * document.getElementById('barBackTipPercent').value / 100;
+    if( document.getElementById('numBarBacks').value > 0 && document.getElementById('numHosts').value > 0) {
+        totalTips -= parseFloat(document.getElementById(`TotalSalesForDay`).innerText) * ((document.getElementById('barBackTipPercent').value / 100) + (document.getElementById('hostTipPercent').value / 100));
 
+    }else if (document.getElementById('numBarBacks').value > 0) {
+        totalTips -= parseFloat(document.getElementById(`TotalSalesForDay`).innerText) * (document.getElementById('barBackTipPercent').value / 100);
+    } else if (document.getElementById('numHosts').value > 0) {
+        totalTips -= parseFloat(document.getElementById(`TotalSalesForDay`).innerText) * (document.getElementById('hostTipPercent').value / 100);
     }
 
 

@@ -9,7 +9,16 @@
 </head>
 
 <body>
-    <h1>Tip Calculator</h1>
+    <h1>Tip Calculator </h1>
+    <label for="taxPercent">
+        Sales Tax Percent:
+        <input type="number" id="taxPercent" placeholder="Sales Tax Percent" min="0" step=".1">%
+    </label>
+    <label for="AmPmCutOff">
+        Am / Pm Cut Off:
+        <input type="time" id="AmPmCutOff">%
+    </label>
+    <br><br>
 
     <label for="numServers">Number of Servers:
         <input type="number" id="numServers" placeholder="Number of servers" min="0">
@@ -34,9 +43,28 @@
     <br><br>
 
     <h1>
-        Total Sales for the day: $<span id="TotalSalesForDay">0</span>
-        <br>
-        Total Tips for the day: &nbsp;$<span id="TotalTipsForDay">0</span>
+        <table border="1">
+            <tr>
+                <th>Description</th>
+                <th>Amount</th>
+            </tr>
+            <tr>
+                <td>Total Sales for the day</td>
+                <td>$<span id="TotalSalesForDay">0</span></td>
+            </tr>
+            <tr>
+                <td>Total Cash Tips for the day</td>
+                <td>$<span id="TotalCashTipsForDay">0</span></td>
+            </tr>
+            <tr>
+                <td>Total CC Tips for the day</td>
+                <td>$<span id="TotalCCTipsForDay">0</span></td>
+            </tr>
+            <tr>
+                <td>Total Tips for the day</td>
+                <td>$<span id="TotalTipsForDay">0</span></td>
+            </tr>
+        </table>
     </h1>
 
     <label for="numBarBacks">Number of Bar Backs:
@@ -44,11 +72,26 @@
     </label>
     <br>
     <label for="barBackTipPercent">Tip Percent for Bar Backs:
-        <input type="number" id="barBackTipPercent" placeholder="Tip Percent for Bar Backs" min="0" style="width:3em" step=".1">%
+        <input type="number" id="barBackTipPercent" placeholder="Tip Percent for Bar Backs" min="0" step=".1">%
     </label>
     <br><br><br>
     <table border="1">
         <tbody id="barBackTable">
+        </tbody>
+    </table>
+
+    <br><br>
+    
+    <label for="numHosts">Number of Hosts:
+        <input type="number" id="numHosts" placeholder="Number of Hosts" min="0">
+    </label>
+    <br>
+    <label for="hostTipPercent">Tip Percent for Hosts:
+        <input type="number" id="hostTipPercent" placeholder="Tip Percent for Hosts" min="0" step=".1">%
+    </label>
+    <br><br><br>
+    <table border="1">
+        <tbody id="hostTable">
         </tbody>
     </table>
 
