@@ -9,91 +9,117 @@
 </head>
 
 <body>
-    <h1>Tip Calculator </h1>
-    <label for="taxPercent">
-        Sales Tax Percent:
-        <input type="number" id="taxPercent" placeholder="Sales Tax Percent" min="0" step=".1">%
-    </label>
-    <label for="AmPmCutOff">
-        Am / Pm Cut Off:
-        <input type="time" id="AmPmCutOff">%
-    </label>
-    <br><br>
+    <h1>Tip Calculator</h1>
 
-    <label for="numServers">Number of Servers:
-        <input type="number" id="numServers" placeholder="Number of servers" min="0">
-    </label>
-    <br><br><br>
-    <table border="1">
-        <tbody id="serverTable">
-        </tbody>
-    </table>
+    <h3>Enter once for AM shift and once for PM shift </h3>
 
-    <br><br>
-
-    <label for="numBartenders">Number of Bartenders:
-        <input type="number" id="numBartenders" placeholder="Number of bartenders" min="0">
-    </label>
-    <br><br><br>
-    <table border="1">
-        <tbody id="bartenderTable">
-        </tbody>
-    </table>
-
-    <br><br>
-
-    <h1>
-        <table border="1">
-            <tr>
-                <th>Description</th>
-                <th>Amount</th>
-            </tr>
-            <tr>
-                <td>Total Sales for the day</td>
-                <td>$<span id="TotalSalesForDay">0</span></td>
-            </tr>
-            <tr>
-                <td>Total Cash Tips for the day</td>
-                <td>$<span id="TotalCashTipsForDay">0</span></td>
-            </tr>
-            <tr>
-                <td>Total CC Tips for the day</td>
-                <td>$<span id="TotalCCTipsForDay">0</span></td>
-            </tr>
-            <tr>
-                <td>Total Tips for the day</td>
-                <td>$<span id="TotalTipsForDay">0</span></td>
-            </tr>
+    <!-- Sales Tax and Cut Off -->
+    <section>
+        <table>
+            <tbody>
+                <tr>
+                    <th>Cut Off</th>
+                    <td><input type="time" id="AmPmCutOff"></td>
+                </tr>
+                <tr>
+                    <th>Sales Tax</th>
+                    <td><input type="number" id="taxPercent" placeholder="Sales Tax" min="0" step=".1">%</td>
+                </tr>
+                <tr>
+                    <th>Bar Back Tip Percent</th>
+                    <td><input type="number" id="barBackTipPercent" placeholder="Bar Back Tip Percent" min="0" step=".1">%</td>
+                </tr>
+                <tr>
+                    <th>Host Tip Percent</th>
+                    <td><input type="number" id="hostTipPercent" placeholder="Host Tip Percent" min="0" step=".1">%</td>
+                </tr>
+            </tbody>
         </table>
-    </h1>
+    </section>
 
-    <label for="numBarBacks">Number of Bar Backs:
-        <input type="number" id="numBarBacks" placeholder="Number of Bar Backs" min="0">
-    </label>
     <br>
-    <label for="barBackTipPercent">Tip Percent for Bar Backs:
-        <input type="number" id="barBackTipPercent" placeholder="Tip Percent for Bar Backs" min="0" step=".1">%
-    </label>
-    <br><br><br>
-    <table border="1">
-        <tbody id="barBackTable">
-        </tbody>
-    </table>
 
-    <br><br>
-    
-    <label for="numHosts">Number of Hosts:
-        <input type="number" id="numHosts" placeholder="Number of Hosts" min="0">
-    </label>
+    <!-- Servers Section -->
+    <section>
+        <label for="numServers">Number of Servers:
+            <input type="number" id="numServers" placeholder="Number of servers" min="0">
+        </label>
+        <br><br>
+        <table border="1">
+            <tbody id="serverTable"></tbody>
+        </table>
+    </section>
+
     <br>
-    <label for="hostTipPercent">Tip Percent for Hosts:
-        <input type="number" id="hostTipPercent" placeholder="Tip Percent for Hosts" min="0" step=".1">%
-    </label>
-    <br><br><br>
-    <table border="1">
-        <tbody id="hostTable">
-        </tbody>
-    </table>
+
+    <!-- Bartenders Section -->
+    <section>
+        <label for="numBartenders">Number of Bartenders:
+            <input type="number" id="numBartenders" placeholder="Number of bartenders" min="0">
+        </label>
+        <br><br>
+        <table border="1">
+            <tbody id="bartenderTable"></tbody>
+        </table>
+    </section>
+
+    <br>
+
+    <!-- Summary Table -->
+    <section>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Total Sales for the day</td>
+                    <td>$<span id="TotalSalesForDay">0</span></td>
+                </tr>
+                <tr>
+                    <td>Total Cash Tips for the day</td>
+                    <td>$<span id="TotalCashTipsForDay">0</span></td>
+                </tr>
+                <tr>
+                    <td>Total CC Tips for the day</td>
+                    <td>$<span id="TotalCCTipsForDay">0</span></td>
+                </tr>
+                <tr>
+                    <td>Total Tips for the day</td>
+                    <td>$<span id="TotalTipsForDay">0</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <br>
+
+    <!-- Bar Backs Section -->
+    <section>
+        <label for="numBarBacks">Number of Bar Backs:
+            <input type="number" id="numBarBacks" placeholder="Number of Bar Backs" min="0">
+        </label>
+        <br><br>
+        <table border="1">
+            <tbody id="barBackTable"></tbody>
+        </table>
+    </section>
+
+    <br>
+
+    <!-- Hosts Section -->
+    <section>
+        <label for="numHosts">Number of Hosts:
+            <input type="number" id="numHosts" placeholder="Number of Hosts" min="0">
+        </label>
+        <br><br>
+        <table border="1">
+            <tbody id="hostTable"></tbody>
+        </table>
+    </section>
 
     <script src="script.js"></script>
 </body>
