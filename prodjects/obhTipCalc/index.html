@@ -4,124 +4,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tip Calculator</title>
+
+    <!-- bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
     <link rel="stylesheet" href="style.css">
+    <title>Tip Calculator</title>
 </head>
 
 <body>
-    <h1>Tip Calculator</h1>
+    <h1 class="text-center">Tip Calculator</h1>
+    
+    <div class="p-2">
+        <div class="d-flex flex-row overflow-auto" style="white-space: nowrap; gap: 0.25rem;">
+            <div class="col p-1">
+                <button id="addServerBtn" type="button" class="nav-btn">
+                    Add Bartender/Server
+                </button>
+            </div>
+            <div class="col p-1">
+                <button id="addBarbackBtn" type="button" class="nav-btn" >
+                    Add Barback/Host
+                </button>
+            </div>
+            <div class="col p-1">
+                <button id="employeeTipsBtn" type="button" class="nav-btn" popovertarget="EmployeeTipList">
+                    Calculate Tips
+                </button>
+            </div>
+            <div class="col p-1">
+                <button id="editEmployeeBtn" type="button" class="nav-btn" popovertarget="EditEmployees">
+                    Edit
+                </button>
+            </div>
+        </div>
+    </div>
 
-    <h3>Enter once for AM shift and once for PM shift </h3>
+    <div popover id="AddServer" class="p-0 popover d-none popover-bottom popupPosition" role="tooltip">
+        <div class="popover-header d-flex align-items-center justify-content-between" style="height: 2em;">
+            <span>Add Bartender/Server</span>
+            <div class="d-flex align-items-center">
+                <!-- X button -->
+                <button type="button" class="btn-close close p-0 ms-2" id="closePopoverBtn" aria-label="Close" >&times;</button>
+            </div>
+        </div>
+        <div class="popover-body">
+            <form id="addServerForm">
+                <div class="mb-3 p-2">
+                    <label for="serverName" class="form-label">Server/Bartender Name</label>
+                    <input type="text" class="form-control" id="serverName" placeholder="Enter name">
 
-    <!-- Sales Tax and Cut Off -->
-    <section>
-        <table>
-            <tbody>
-                <tr>
-                    <th>Cut Off</th>
-                    <td><input type="time" id="AmPmCutOff"></td>
-                </tr>
-                <tr>
-                    <th>Sales Tax</th>
-                    <td><input type="number" id="taxPercent" placeholder="Sales Tax" min="0" step=".1">%</td>
-                </tr>
-                <tr>
-                    <th>Bar Back Tip Percent</th>
-                    <td><input type="number" id="barBackTipPercent" placeholder="Bar Back Tip Percent" min="0" step=".1">%</td>
-                </tr>
-                <tr>
-                    <th>Host Tip Percent</th>
-                    <td><input type="number" id="hostTipPercent" placeholder="Host Tip Percent" min="0" step=".1">%</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+                    <br>
+                    <div class="form-check d-flex justify-content-between w-75">
+                        Shift:
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="serverShiftAM" name="shift" value="AM" checked required>
+                            <label class="form-check-label" for="serverShiftAM">AM</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="serverShiftPM" name="shift" value="PM"
+                                required>
+                            <label class="form-check-label" for="serverShiftPM">PM</label>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-check d-flex justify-content-between w-75">
+                        Type:
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="serverTypeServer" name="serverType" value="server"
+                                checked required>
+                            <label class="form-check-label" for="serverTypeServer">Server</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="serverTypeBartender" name="serverType" value="bartender"
+                                required>
+                            <label class="form-check-label" for="serverTypeBartender">Bartender</label>
+                        </div>
+                    </div>
 
-    <br>
+                    <label for="serverHoursStart" class="form-label mt-2">Time Start</label>
+                    <input type="time" class="form-control" id="serverHoursStart" placeholder="Enter hours" required>
 
-    <!-- Servers Section -->
-    <section>
-        <label for="numServers">Number of Servers:
-            <input type="number" id="numServers" placeholder="Number of servers" min="0">
-        </label>
-        <br><br>
-        <table border="1">
-            <tbody id="serverTable"></tbody>
-        </table>
-    </section>
+                    <label for="serverHoursEnd" class="form-label mt-2">Time End</label>
+                    <input type="time" class="form-control" id="serverHoursEnd" placeholder="Enter hours" required>
 
-    <br>
+                    <label for="cashTips" class="form-label mt-2">Cash Tips</label>
+                    <input type="number" class="form-control" id="cashTips" placeholder="Enter cash tips" step=".01" required>
 
-    <!-- Bartenders Section -->
-    <section>
-        <label for="numBartenders">Number of Bartenders:
-            <input type="number" id="numBartenders" placeholder="Number of bartenders" min="0">
-        </label>
-        <br><br>
-        <table border="1">
-            <tbody id="bartenderTable"></tbody>
-        </table>
-    </section>
+                    <label for="creditTips" class="form-label mt-2">Credit Tips</label>
+                    <input type="number" class="form-control" id="creditTips" placeholder="Enter credit tips" step=".01" required>
 
-    <br>
+                    <label for="grossSales" class="form-label mt-2">Gross Sales</label>
+                    <input type="number" class="form-control" id="grossSales" placeholder="Enter gross sales" step=".01" required>
 
-    <!-- Summary Table -->
-    <section>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Description</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Total Sales for the day</td>
-                    <td>$<span id="TotalSalesForDay">0</span></td>
-                </tr>
-                <tr>
-                    <td>Total Cash Tips for the day</td>
-                    <td>$<span id="TotalCashTipsForDay">0</span></td>
-                </tr>
-                <tr>
-                    <td>Total CC Tips for the day</td>
-                    <td>$<span id="TotalCCTipsForDay">0</span></td>
-                </tr>
-                <tr>
-                    <td>Total Tips for the day</td>
-                    <td>$<span id="TotalTipsForDay">0</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+                    <label fot="SalesTax" class="form-label mt-2">Sales Tax</label>
+                    <input type="number" class="form-control" id="SalesTax" placeholder="Enter sales tax" step=".01" required>
 
-    <br>
+                    <button id="submitServer" type='submit' class="btn btn-primary mt-3" disabled>Add Server</button>
 
-    <!-- Bar Backs Section -->
-    <section>
-        <label for="numBarBacks">Number of Bar Backs:
-            <input type="number" id="numBarBacks" placeholder="Number of Bar Backs" min="0">
-        </label>
-        <br><br>
-        <table border="1">
-            <tbody id="barBackTable"></tbody>
-        </table>
-    </section>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <br>
 
-    <!-- Hosts Section -->
-    <section>
-        <label for="numHosts">Number of Hosts:
-            <input type="number" id="numHosts" placeholder="Number of Hosts" min="0">
-        </label>
-        <br><br>
-        <table border="1">
-            <tbody id="hostTable"></tbody>
-        </table>
-    </section>
+    <div popover id="AddBarback" class="p-0 popover d-none popover-bottom popupPosition" role="tooltip">
+        <div class="popover-header d-flex align-items-center justify-content-between" style="height: 2em;">
+            <span>Add Barback/Host</span>
+            <div class="d-flex align-items-center">
+                <!-- X button -->
+                <button type="button" class="btn-close close p-0 ms-2" id="closeBarbackPopoverBtn" aria-label="Close">&times;</button>
+            </div>
+        </div>
+        <div class="popover-body">
+            <form id="addBarbackForm">
+                <div class="mb-3">
+                    <label for="barbackName" class="form-label">Barback Name</label>
+                    <input type="text" class="form-control" id="barbackName" placeholder="Enter name">
 
-    <script src="script.js"></script>
+                    <br>
+                    <div class="form-check d-flex justify-content-between w-75">
+                        Shift:
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="barbackShiftAM" name="barbackShift" value="AM"
+                                checked required>
+                            <label class="form-check-label" for="barbackShiftAM">AM</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="barbackShiftPM" name="barbackShift" value="PM"
+                                required>
+                            <label class="form-check-label" for="barbackShiftPM">PM</label>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-check d-flex justify-content-between w-75">
+                        Type:
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="barbackTypeBar" name="barbackType" value="barback"
+                                checked required>
+                            <label class="form-check-label" for="barbackTypeBar">Bar Back</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="barbackTypeHost" name="barbackType" value="host"
+                                required>
+                            <label class="form-check-label" for="barbackTypeHost">Host</label>
+                        </div>
+                    </div>
+                    <br>
+
+                    <label for="barbackHoursStart" class="form-label mt-2">Time Start</label>
+                    <input type="time" class="form-control" id="barbackHoursStart" placeholder="Enter hours" required>
+
+                    <label for="barbackHoursEnd" class="form-label mt-2">Time End</label>
+                    <input type="time" class="form-control" id="barbackHoursEnd" placeholder="Enter hours" required>
+
+                    <button id="submitBarback" class="btn btn-primary mt-3" disabled>Add Barback</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div popover id="EmployeeTipList" class="p-0 d-none popover popover-bottom popupPosition" role="tooltip"
+        style="padding: auto; width: 95%; position: absolute; top: 50px; border-width: 1px;border-color: rgba(0, 0, 0, 0.2); border-radius: 4.8px;">
+        <div class="popover-header d-flex align-items-center justify-content-between" style="height: 2em;">
+                <span>CalculateTips</span>
+                <div class="d-flex align-items-center">
+                    <!-- X button -->
+                    <button type="button" class="btn-close close p-0 ms-2" id="closeBarbackPopoverBtn" aria-label="Close">&times;</button>
+                </div>
+        </div>
+        <div class="p-1 popover-body overflow-visible" >
+                <table class="table table-sm table-bordered table-striped" id="employeeListTable" style="font-size:calc(0.8rem + 0.4vw);">
+                </table>
+        </div>
+    </div>
+
+    <!-- Edit Employees Popover -->
+    <div popover id="EditEmployees" class="p-0 d-none popover popover-bottom popupPosition" role="tooltip"
+        style="width: 95%; position: absolute; top: 50px; border-width: 1px; border-color: rgba(0, 0, 0, 0.2); border-radius: 4.8px;">
+        <div class="popover-header d-flex align-items-center justify-content-between p-2" style="height: 2em;">
+                <span class="">Edit Employees (click on the row to edit)</span>
+                <div class="d-flex align-items-center">
+                    <!-- X button -->
+                    <button type="button" class="btn-close close p-0 ms-2" id="closeListEmployeesPopoverBtn" aria-label="Close">&times;</button>
+                </div>
+        </div>
+        <div class="popover-body overflow-visible p-0">
+                <table class="table table-sm table-bordered table-striped p-0" id="editEmployeeTable" style="font-size:calc(0.6rem + 0.6vw);">
+                    <!-- Table content to be dynamically filled -->
+                </table>
+        </div>
+    </div>
+
+
+    <script src="serverBartender.js"></script>
+    <script src="barbackHost.js"></script>
+    <script src="calculator.js"></script>
+    <script src="main.js"></script>
+
 </body>
 
 </html>
