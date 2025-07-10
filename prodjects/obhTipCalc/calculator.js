@@ -3,6 +3,24 @@ class calculator {
         console.log('Calculator initialized');
 
         // this.servers = []
+
+        this.serversAM = [];
+        this.barbacksAM = [];
+        this.hostsAM = [];
+        this.amBBPool = 0;
+        this.amHostPool = 0;
+
+        this.serversPM = [];
+        this.barbacksPM = [];
+        this.hostsPM = [];
+        this.pmBBPool = 0;
+        this.pmHostPool = 0;
+
+        this.servers = [];
+        this.barbacks = [];
+        this.hosts = [];
+
+        
         // this.addServer(new ServerBartender('Casey', 'AM', '11:30', '16:00', 54, 60, 784.06, 34.07, 'bartender'));           //45          55.32
         // this.addServer(new ServerBartender('Caleigh', 'AM', '11:30', '16:00', 36, 50.65, 482.73, 34.76, 'server'));         //45          55.32
         // this.addServer(new ServerBartender('Casey', 'PM', '16:00', '17:00', 0, 60, 784.06, 34.07, 'bartender'));            //33          16.45
@@ -10,21 +28,29 @@ class calculator {
         // this.addServer(new ServerBartender('Mike', 'PM', '17:00', '21:30', 86, 35, 1438.71, 83.84, 'bartender'));           //150(140)    74.02
         // this.addServer(new ServerBartender('Ariana', 'PM', '16:00', '22:00', 114, 238.21, 2326.44, 164.94, 'server'));      //199         98.78
         // //test barback
-        // this.barbacks = [new BarbackHost('Lucas', 'PM', '16:00', '21:00', 'barback')];                                      //40          41.33
-        // this.barbacks.push(new BarbackHost('Caua', 'PM', '17:00', '22:00', 'barback'));                                     //40          41.33
+        // this.addBarback(new BarbackHost('Lucas', 'PM', '16:00', '21:00', 'barback'));                                      //40          41.33
+        // this.addBarback(new BarbackHost('Caua', 'PM', '17:00', '22:00', 'barback'));                                     //40          41.33
         // //test host
-        // this.hosts = [new BarbackHost('Rhianna', 'PM', '16:00', '21:00', 'host')];                                          //19
-        // Initialize empty arrays for servers, barbacks, and hosts
-        
+        // this.addHost(new BarbackHost('Rhianna', 'PM', '16:00', '21:00', 'host'));                                          //19
 
-        this.servers = [];
-        this.barbacks = [];
-        this.hosts = [];
+        // this.addServer(new ServerBartender('caleigh', 'PM', '16:00', '21:00', 124+24, 130, 1427.88, 104.43, 'server'));           
+        // this.addServer(new ServerBartender('mike', 'PM', '16:00', '21:00', 152+30,  155.39, 1494.78, 107.96, 'bartender'));       
+        // this.addServer(new ServerBartender('Ari', 'PM', '16:00', '21:00', 239+28, 129, 1652.05, 122.55, 'server'));           
+
+       
+        // this.addBarback(new BarbackHost('Ryan', 'PM', '16:00', '21:00', 'barback'));                                      
+        // this.addBarback(new BarbackHost('Caua', 'PM', '17:00', '22:00', 'barback'));  
+
+        // this.addHost(new BarbackHost('shannon', 'PM', '16:00', '21:00', 'host'));                                          
+
+
+
         this.bbTipPercent = 0.04; // Default barback tip percentage
         this.hostTipPercent = 0.01; // Default host tip percentage
     }
 
     addServer(server) {
+        this.servers = this.serversAM.concat(this.serversPM);
         // Check if a server with the same name already exists
         if (this.servers.some(s => s.getName().toUpperCase() === server.getName().toUpperCase())) {
             if (this.servers.some(s => (s.getAmPm() ==='AM' &&  server.getAmPm() === 'PM'))) {
@@ -59,14 +85,31 @@ class calculator {
 
             }
         }
-        this.servers.push(server);
-        console.log(server)
+        if (server.getAmPm() === 'AM') {
+            this.serversAM.push(server);
+        } 
+        if (server.getAmPm() === 'PM') {
+            this.serversPM.push(server);
+        }
+        this.servers = this.serversAM.concat(this.serversPM);
     }
     addBarback(barback) {
-        this.barbacks.push(barback);
+        if( barback.getAmPm() === 'AM') {
+            this.barbacksAM.push(barback);
+        } 
+        if (barback.getAmPm() === 'PM') {
+            this.barbacksPM.push(barback);
+        }
+        this.barbacks = this.barbacksAM.concat(this.barbacksPM);
     }
     addHost(host) {
-        this.hosts.push(host);
+        if( host.getAmPm() === 'AM') {
+            this.hostsAM.push(host);
+        }
+        if (host.getAmPm() === 'PM') {
+            this.hostsPM.push(host);
+        }
+        this.hosts = this.hostsAM.concat(this.hostsPM);
     }
 
     editServer(index, server) {
@@ -103,119 +146,210 @@ class calculator {
             }
         }
         if (index >= 0 && index < this.servers.length) {
-            this.servers[index] = server;
+            if (server.getAmPm() === 'AM') {
+                this.serversAM[index] = server;
+            }
+            if (server.getAmPm() === 'PM') {
+                this.serversPM[index] = server;
+            }
         } else {
             console.error('Index out of bounds for servers array');
         }
+        this.servers = this.serversAM.concat(this.serversPM);
     }
     editBarback(index, barback) {
         if (barback.getType() === 'host') {
-            this.hosts.push(barback);
-            this.barbacks.splice(index, 1); // Remove from barbacks if it's a host
+            if (barback.getAmPm() === 'AM') {
+                this.hostsAM[index] = barback;
+            }
+            if (barback.getAmPm() === 'PM') {
+                this.hostsPM[index] = barback;
+            }
+            let hostIndex = this.hostsAM.findIndex(h => h.getName().toUpperCase() === barback.getName().toUpperCase());
+            if (hostIndex !== -1) {
+                this.hostsAM.splice(hostIndex, 1);
+            }
+            hostIndex = this.hostsPM.findIndex(h => h.getName().toUpperCase() === barback.getName().toUpperCase());
+            if (hostIndex !== -1) {
+                this.hostsPM.splice(hostIndex, 1);
+            }
         } else {
-            this.barbacks[index] = barback;
+            if (barback.getAmPm() === 'AM') {
+                this.barbacksAM[index] = barback;
+            }
+            if (barback.getAmPm() === 'PM') {
+                this.barbacksPM[index] = barback;
+            }
         }
+        this.barbacks = this.barbacksAM.concat(this.barbacksPM);
+        this.hosts = this.hostsAM.concat(this.hostsPM);
     }
     editHost(index, host) {
-        if( host.getType() === 'barback') {
-            this.barbacks.push(host);
-            this.hosts.splice(index, 1); // Remove from hosts if it's a barback
+        if (host.getType() === 'host') {
+            if (host.getAmPm() === 'AM') {
+                this.hostsAM[index] = host;
+            }
+            if (barback.getAmPm() === 'PM') {
+                this.hostsPM[index] = bahostrback;
+            }
+            let bbtIndex = this.barbacksAM.findIndex(b => b.getName().toUpperCase() === host.getName().toUpperCase());
+            if (bbtIndex !== -1) {
+                this.barbacksAM.splice(bbtIndex, 1);
+            }
+            bbtIndex = this.barbacksPM.findIndex(b => b.getName().toUpperCase() === host.getName().toUpperCase());
+            if (bbtIndex !== -1) {
+                this.barbacksPM.splice(bbtIndex, 1);
+            }
         } else {
-            this.hosts[index] = host;
+            if (barback.getAmPm() === 'AM') {
+                this.barbacksAM[index] = host;
+            }
+            if (barback.getAmPm() === 'PM') {
+                this.barbacksPM[index] = host;
+            }
         }
+        this.barbacks = this.barbacksAM.concat(this.barbacksPM);
+        this.hosts = this.hostsAM.concat(this.hostsPM);
     }
 
-    getTotalSales(shift) {
-        let totalSales = 0;
-        this.servers.forEach(server => {
-            // console.log(server.ge)
-            if(server.getAmPm() === shift){
-                totalSales += server.getGrossSales();
-            }
-        });
-        return totalSales;
-    }
 
     calcBBTotalTips() {
-        this.barbacks.forEach(barback =>{
-            const sameShiftServers = this.servers.filter(
-                s => s.getType() === 'server' && s.getAmPm() === barback.getAmPm()
-            );
-            let barbackTotalHours = this.barbacks
-                .filter(b => b.getAmPm() === barback.getAmPm())
-                .reduce((sum, b) => sum + b.getTotalHours(), 0);
+        if(this.barbacksAM.length) {
+            //split the tip pool in to cash and credit
+            let amBBcashPool = Math.floor(this.amBBPool/2);
+            let amBBcardPool = this.amBBPool - amBBcashPool;
+
+            // let barbackTotalCashTipsAM = this.serversAM.reduce((sum, server) => sum + server.getBarbackCashTips(this.bbTipPercent), 0);
+            // let barbackTotalCardTipsAM = this.serversAM.reduce((sum, server) => sum + server.getBarbackCardTips(this.bbTipPercent), 0);
             
-            let barbackTotalCashTips = sameShiftServers.reduce((sum, server) => sum + server.getBarbackCashTips(this.bbTipPercent), 0);
-            let barbackTotalCardTips = sameShiftServers.reduce((sum, server) => sum + server.getBarbackCardTips(this.bbTipPercent), 0);
+            let bbTotalHoursAM = this.barbacksAM.reduce((sum, b) => sum + b.getTotalHours(), 0);
+            
+            let bbTipCashPerHourAM = amBBcashPool / bbTotalHoursAM;
+            let bbTipCardPerHourM = amBBcardPool / bbTotalHoursAM;
 
-            let barbackTipCashPerHour = barbackTotalCashTips / barbackTotalHours;
-            let barbackTipCardPerHour = barbackTotalCardTips / barbackTotalHours;
-            let cashTipOut = barbackTipCashPerHour * barback.getTotalHours();
-            let ccTipOut = barbackTipCardPerHour * barback.getTotalHours();
+            this.barbacksAM.forEach(barback => {
+                let cashTipOutAM = bbTipCashPerHourAM * barback.getTotalHours();
+                let ccTipOutAM = bbTipCardPerHourM * barback.getTotalHours();
+                barback.setCashtipOut(cashTipOutAM.toFixed(2));
+                barback.setCardtipOut(ccTipOutAM.toFixed(2));
+            });
+        }
+        
+        if(this.barbacksPM.length) {
+            //split the tip pool in to cash and credit
+            let pmBBcashPool = Math.floor(this.pmBBPool/2);
+            let pmBBcardPool = this.pmBBPool - pmBBcashPool;
+            
+            let bbTotalHoursPM = this.barbacksPM.reduce((sum, b) => sum + b.getTotalHours(), 0);
+            
+            let bbTipCashPerHourPM = pmBBcashPool / bbTotalHoursPM;
+            let bbTipCardPerHourPM = pmBBcardPool / bbTotalHoursPM;
 
-            barback.setCashtipOut(cashTipOut.toFixed(2));
-            barback.setCardtipOut(ccTipOut.toFixed(2));
+            this.barbacksPM.forEach(barback => {
+                let cashTipOutPM = bbTipCashPerHourPM * barback.getTotalHours();
+                let ccTipOutPM = bbTipCardPerHourPM * barback.getTotalHours();
+                barback.setCashtipOut(cashTipOutPM.toFixed(2));
+                barback.setCardtipOut(ccTipOutPM.toFixed(2));
+            });
+        }
 
 
-        });
     }
 
-    calcHostTotalTips(){
-        this.hosts.forEach(host =>{
-            const sameShiftServers = this.servers.filter(
-                s => s.getType() === 'server' && s.getAmPm() === host.getAmPm()
-            );
-            let hostTotalHours = this.hosts
-                .filter(h => h.getAmPm() === host.getAmPm())
-                .reduce((sum, h) => sum + h.getTotalHours(), 0);
+    calcHostTotalTips() {
+        if (this.hostsAM.length) {
+            // Split the tip pool into cash and credit, but hosts only get cash tips
+            let amHostcashPool = this.amHostPool; // All to cash
+            let hostTotalHoursAM = this.hostsAM.reduce((sum, h) => sum + h.getTotalHours(), 0);
+            let hostTipCashPerHourAM = hostTotalHoursAM > 0 ? amHostcashPool / hostTotalHoursAM : 0;
 
-                let hostTotalTips = sameShiftServers.reduce((sum, server) => sum + server.getHostTips(this.hostTipPercent), 0);
-                let hostTipPerHour = hostTotalTips / hostTotalHours;
-                let tipOut = hostTipPerHour * host.getTotalHours();
-                host.setCashtipOut(tipOut.toFixed(2));
-            
-        });
+            this.hostsAM.forEach(host => {
+                let cashTipOutAM = hostTipCashPerHourAM * host.getTotalHours();
+                host.setCashtipOut(cashTipOutAM.toFixed(2));
+                host.setCardtipOut('0.00');
+            });
+        }
+        if (this.hostsPM.length) {
+            let pmHostcashPool = this.pmHostPool; // All to cash
+            let hostTotalHoursPM = this.hostsPM.reduce((sum, h) => sum + h.getTotalHours(), 0);
+            let hostTipCashPerHourPM = hostTotalHoursPM > 0 ? pmHostcashPool / hostTotalHoursPM : 0;
 
+            this.hostsPM.forEach(host => {
+                let cashTipOutPM = hostTipCashPerHourPM * host.getTotalHours();
+                host.setCashtipOut(cashTipOutPM.toFixed(2));
+                host.setCardtipOut('0.00');
+            });
+        }
     }
 
 
     calcServerTotalTips() {
-
-        // console.log(totalCardTips)
-
-        this.servers.forEach(server => {
-            let serverTotalHours = 0;
-            this.servers.forEach(s => {
-                if (s.getAmPm() === server.getAmPm()) {
-                    serverTotalHours += s.getTotalHours();
-                }
-            });
-            let totalCashTips = 0;
-            this.servers.forEach(s => {
-                if (s.getAmPm() === server.getAmPm()) {
-                    totalCashTips += s.getCashTips();
-                }
-            });
-            let totalCardTips = 0;
-            this.servers.forEach(s => {
-                if (s.getAmPm() === server.getAmPm()) {
-                    totalCardTips += s.getCardTips();
-                }
-            });
-
-            let tipCashPerHour = serverTotalHours > 0 ? totalCashTips / serverTotalHours : 0;
-            let tipCardPerHour = serverTotalHours > 0 ? totalCardTips / serverTotalHours : 0;
-
-            let cashTipOut = tipCashPerHour * server.getTotalHours()
-            let ccTipOut = (tipCardPerHour * server.getTotalHours());
-
-            ccTipOut = ccTipOut.toString().match(/(\d+(\.\d{0,2})?)/);
-            ccTipOut = parseFloat(ccTipOut)//makes it not round to 2 decimals and just cuts it off
-
-            server.setCashtipOut(cashTipOut.toFixed(2));
-            server.setCardtipOut(ccTipOut.toFixed(2));
-
+        this.serversAM.forEach(server => {
+            this.amBBPool += server.getBBCashTips(this.bbTipPercent);
+            this.amBBPool += server.getBBCardTips(this.bbTipPercent);
+            if (server.getType() === 'server') {
+                this.amHostPool += server.getHostCashTips(this.hostTipPercent);
+            }
         });
+        let serverTotalHoursAM = this.serversAM.reduce((sum, s) => sum + s.getTotalHours(), 0);
+        let totalCashTipsAM = this.serversAM.reduce((sum, s) => sum + s.getCashTips(), 0);
+        let totalCardTipsAM = this.serversAM.reduce((sum, s) => sum + s.getCardTips(), 0);
+
+        totalCashTipsAM -= Math.floor(this.amBBPool/2);
+        totalCashTipsAM -= this.amHostPool;
+        totalCardTipsAM -= this.amBBPool - Math.floor(this.amBBPool/2);
+
+
+        // Calculate total tips for AM servers
+        let serverTipCashPerHourAM = serverTotalHoursAM > 0 ? totalCashTipsAM / serverTotalHoursAM : 0;
+        let serverTipCardPerHourAM = serverTotalHoursAM > 0 ? totalCardTipsAM / serverTotalHoursAM : 0;
+
+        serverTipCashPerHourAM = parseFloat(parseFloat(serverTipCashPerHourAM).toFixed(2)); //makes it not round to 2 decimals and just cuts it off
+        serverTipCardPerHourAM = parseFloat(parseFloat(serverTipCardPerHourAM).toFixed(2)); //makes it not round to 2 decimals and just cuts it off
+        this.serversAM.forEach(server => {
+            server.setCashtipOut((serverTipCashPerHourAM * server.getTotalHours()).toFixed(2));
+            server.setCardtipOut((serverTipCardPerHourAM * server.getTotalHours()).toFixed(2));
+        });
+
+
+        this.serversPM.forEach(server => {
+            this.pmBBPool += server.getBBCashTips(this.bbTipPercent);
+            this.pmBBPool += server.getBBCardTips(this.bbTipPercent);
+            if (server.getType() === 'server') {
+                this.pmHostPool += server.getHostCashTips(this.hostTipPercent);
+            }
+        });
+        let serverTotalHoursPM = this.serversPM.reduce((sum, s) => sum + s.getTotalHours(), 0);
+        let totalCashTipsPM = this.serversPM.reduce((sum, s) => sum + s.getCashTips(), 0);
+        let totalCardTipsPM = this.serversPM.reduce((sum, s) => sum + s.getCardTips(), 0);
+        totalCashTipsPM -= Math.floor(this.pmBBPool/2);
+        totalCashTipsPM -= this.pmHostPool;
+        totalCardTipsPM -= this.pmBBPool - Math.floor(this.pmBBPool/2);
+        // Calculate total tips for PM servers
+        let serverTipCashPerHourPM = serverTotalHoursPM > 0 ? totalCashTipsPM / serverTotalHoursPM : 0;
+        let serverTipCardPerHourPM = serverTotalHoursPM > 0 ? totalCardTipsPM / serverTotalHoursPM : 0;
+
+        serverTipCashPerHourPM = parseFloat(parseFloat(serverTipCashPerHourPM).toFixed(2));
+        serverTipCardPerHourPM = parseFloat(parseFloat(serverTipCardPerHourPM).toFixed(2));
+        this.serversPM.forEach(server => {
+            server.setCashtipOut((serverTipCashPerHourPM * server.getTotalHours()).toFixed(2));
+            server.setCardtipOut((serverTipCardPerHourPM * server.getTotalHours()).toFixed(2));
+        });
+
+
+
+
+
+        if(this.barbacks.length > 0) {
+            this.calcBBTotalTips();
+        }
+        if(this.hosts.length > 0) {
+            this.calcHostTotalTips();
+        }
+        console.log('AM Barback Pool:', this.amBBPool);
+        console.log('AM Host Pool:', this.amHostPool);
+        console.log('PM Barback Pool:', this.pmBBPool);
+        console.log('PM Host Pool:', this.pmHostPool);
 
     }
 
@@ -238,13 +372,6 @@ class calculator {
 
     getEmployeeTips() {
         this.calcServerTotalTips();
-
-        if(this.barbacks.length > 0) {
-            this.calcBBTotalTips();
-        }
-        if(this.hosts.length > 0) {
-            this.calcHostTotalTips();
-        }
 
         // Clear existing content
         this.drawEmployeeListHead();
@@ -341,10 +468,8 @@ class calculator {
             newSaveBtn.textContent = 'Save Changes'; // Change button text to indicate editing
             saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
 
-            console.log('Editing server:', index);
             newSaveBtn.addEventListener('click', () => {
             if (type === 'server') {
-                console.log('Editing server:', index);
                 const server = this.servers[index];
                 server.setName(document.getElementById('serverName').value);
                 server.setAmPm(document.querySelector('input[name="shift"]:checked').value);
