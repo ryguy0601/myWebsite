@@ -35,8 +35,6 @@ class ServerBartender {
         // Calculate net sales
         this.netSales = this.grossSales - this.salestax - this.cardTips;
         this.setType(type);
-
-
     }
     setName(name) {
         this.name = name;
@@ -51,32 +49,29 @@ class ServerBartender {
         this.E_Time = time;
     }
     setCashTips(tips) {
-        this.cashTips = parseFloat(parseFloat(tips).toFixed(2));
+        this.cashTips = Math.round(parseFloat(tips) * 100) / 100;
     }
     setCardTips(tips) {
-        this.cardTips = parseFloat(parseFloat(tips).toFixed(2));
+        this.cardTips = Math.round(parseFloat(tips) * 100) / 100;
     }
     setGrossSales(sales) {
-        this.grossSales = parseFloat(parseFloat(sales).toFixed(2));
+        this.grossSales = Math.round(parseFloat(sales) * 100) / 100;
     }
     setSalesTax(salesTax) {
-        this.salestax = parseFloat(parseFloat(salesTax).toFixed(2));
+        this.salestax = Math.round(parseFloat(salesTax) * 100) / 100;
     }
     setCashtipOut(tips) {
-        // console.log('Setting cash tip out:', tips);
-        this.cashtipOut = parseFloat(parseFloat(tips).toFixed(2));
-        // console.log('Cash tip out set to:', this.cashtipOut);
+        this.cashtipOut = Math.round(parseFloat(tips) * 100) / 100;
     }
     setCardtipOut(tips) {
-        this.cardtipOut = parseFloat(parseFloat(tips).toFixed(2));
+        this.cardtipOut = Math.round(parseFloat(tips) * 100) / 100;
     }
     setNetSales(netSales) {
-        this.netSales = parseFloat(parseFloat(netSales).toFixed(2));
+        this.netSales = Math.round(parseFloat(netSales) * 100) / 100;
     }
     setType(type) {
         this.type = type;
     }
-
 
 
     getName() {
@@ -96,63 +91,55 @@ class ServerBartender {
         const end = new Date(`1970-01-01T${this.E_Time}:00`);
         let hours = (end - start) / (1000 * 60 * 60);
         if (hours < 0) hours += 24;
-        this.totalHours = parseFloat(hours);
+        this.totalHours = Math.round(hours * 100) / 100;
         return this.totalHours;
     }
     getCashTips() {
-        return parseFloat(this.cashTips.toFixed(2));
+        return Math.round(this.cashTips * 100) / 100;
     }
     getCardTips() {
-        return parseFloat(this.cardTips.toFixed(2));
+        return Math.round(this.cardTips * 100) / 100;
     }
     getTotalTips() {
-        return parseFloat((this.cashTips + this.cardTips).toFixed(2));
+        return Math.round((this.cashTips + this.cardTips) * 100) / 100;
     }
     getGrossSales() {
-        return parseFloat(this.grossSales.toFixed(2));
+        return Math.round(this.grossSales * 100) / 100;
     }
     getSalesTax() {
-        return parseFloat(this.salestax.toFixed(2));
+        return Math.round(this.salestax * 100) / 100;
     }
     getNetSales() {
-        return parseFloat(this.netSales.toFixed(2));
+        return Math.round(this.netSales * 100) / 100;
     }
     getCashtipOut() {
-        return parseFloat(this.cashtipOut.toFixed(2));
+        return Math.round(this.cashtipOut * 100) / 100;
     }
     getCardtipOut() {
-        return parseFloat(this.cardtipOut.toFixed(2));
+        return Math.round(this.cardtipOut * 100) / 100;
     }
     getTotalTipOut() {
-        return parseFloat((this.cashtipOut + this.cardtipOut).toFixed(2));
+        return Math.round((this.cashtipOut + this.cardtipOut) * 100) / 100;
     }
     getType() {
         return this.type;
     }
 
     getBBCashTips(tipPercent) {
-        let totalTips = this.getNetSales()*tipPercent;
-        totalTips = parseFloat(totalTips.toFixed(2));
-        //subtract the cash and card tips already set
-        let cashTips = Math.floor(totalTips/2);
+        let totalTips = this.getNetSales() * tipPercent;
+        totalTips = Math.round(totalTips * 100) / 100;
+        let cashTips = Math.floor(totalTips / 2) + 1;
         return cashTips;
     }
     getBBCardTips(tipPercent) {
-        let totalTips = this.getNetSales()*tipPercent;
-        totalTips = parseFloat(totalTips.toFixed(2));
-        //subtract the cash and card tips already set
-        let cardTips = totalTips-Math.floor(totalTips/2);
+        let totalTips = this.getNetSales() * tipPercent;
+        totalTips = Math.round(totalTips * 100) / 100;
+        let cardTips = totalTips - (Math.floor(totalTips / 2) + 1);
         return cardTips;
     }
-    getHostCashTips(tipPercent) {//host only get cash tips
-        console.log('Calculating host cash tips for:', this.name);
-        let totalTips = this.getNetSales()*tipPercent;
+    getHostCashTips(tipPercent) {
+        let totalTips = this.getNetSales() * tipPercent;
         totalTips = Math.round(totalTips);
-        //subtract the cash and card tips already set
         return totalTips;
     }
-
-
-
-
 }

@@ -33,9 +33,9 @@ class calculator {
         // //test host
         // this.addHost(new BarbackHost('Rhianna', 'PM', '16:00', '21:00', 'host'));                                          //19
 
-        // this.addServer(new ServerBartender('caleigh', 'PM', '16:00', '21:00', 124+24, 130, 1427.88, 104.43, 'server'));           
-        // this.addServer(new ServerBartender('mike', 'PM', '16:00', '21:00', 152+30,  155.39, 1494.78, 107.96, 'bartender'));       
-        // this.addServer(new ServerBartender('Ari', 'PM', '16:00', '21:00', 239+28, 129, 1652.05, 122.55, 'server'));           
+        // this.addServer(new ServerBartender('caleigh', 'PM', '16:00', '21:00', 148, 130, 1427.88, 104.43, 'server'));           
+        // this.addServer(new ServerBartender('mike', 'PM', '16:00', '21:00', 177,  155.39, 1494.78, 107.96, 'bartender'));       
+        // this.addServer(new ServerBartender('Ari', 'PM', '16:00', '21:00', 267, 129, 1652.05, 122.55, 'server'));           
 
        
         // this.addBarback(new BarbackHost('Ryan', 'PM', '16:00', '21:00', 'barback'));                                      
@@ -288,27 +288,50 @@ class calculator {
             this.amBBPool += server.getBBCashTips(this.bbTipPercent);
             this.amBBPool += server.getBBCardTips(this.bbTipPercent);
             if (server.getType() === 'server') {
-                this.amHostPool += server.getHostCashTips(this.hostTipPercent);
+            this.amHostPool += server.getHostCashTips(this.hostTipPercent);
             }
         });
         let serverTotalHoursAM = this.serversAM.reduce((sum, s) => sum + s.getTotalHours(), 0);
         let totalCashTipsAM = this.serversAM.reduce((sum, s) => sum + s.getCashTips(), 0);
         let totalCardTipsAM = this.serversAM.reduce((sum, s) => sum + s.getCardTips(), 0);
-
-        totalCashTipsAM -= Math.floor(this.amBBPool/2);
+        totalCashTipsAM -= Math.floor(this.amBBPool / 2);
         totalCashTipsAM -= this.amHostPool;
-        totalCardTipsAM -= this.amBBPool - Math.floor(this.amBBPool/2);
-
-
+        totalCardTipsAM -= this.amBBPool - Math.floor(this.amBBPool / 2);
         // Calculate total tips for AM servers
         let serverTipCashPerHourAM = serverTotalHoursAM > 0 ? totalCashTipsAM / serverTotalHoursAM : 0;
         let serverTipCardPerHourAM = serverTotalHoursAM > 0 ? totalCardTipsAM / serverTotalHoursAM : 0;
 
-        serverTipCashPerHourAM = parseFloat(parseFloat(serverTipCashPerHourAM).toFixed(2)); //makes it not round to 2 decimals and just cuts it off
-        serverTipCardPerHourAM = parseFloat(parseFloat(serverTipCardPerHourAM).toFixed(2)); //makes it not round to 2 decimals and just cuts it off
+        serverTipCashPerHourAM = Math.floor(serverTipCashPerHourAM * 100) / 100;
+        serverTipCardPerHourAM = Math.floor(serverTipCardPerHourAM * 100) / 100;
+
+        let totalCashTipsAMafterSplit = 0;
+        let totalCardTipsAMafterSplit = 0;
+
         this.serversAM.forEach(server => {
-            server.setCashtipOut((serverTipCashPerHourAM * server.getTotalHours()).toFixed(2));
-            server.setCardtipOut((serverTipCardPerHourAM * server.getTotalHours()).toFixed(2));
+            totalCashTipsAMafterSplit += Math.floor(serverTipCashPerHourAM * server.getTotalHours());
+            totalCardTipsAMafterSplit += Math.floor(serverTipCardPerHourAM * server.getTotalHours() * 100) / 100;
+            server.setCashtipOut(Math.floor(serverTipCashPerHourAM * server.getTotalHours()));
+            server.setCardtipOut(Math.floor(serverTipCardPerHourAM * server.getTotalHours() * 100) / 100);
+        });
+        totalCardTipsAM += totalCashTipsAM - totalCashTipsAMafterSplit;
+        let leftOvercardTipsAM = totalCardTipsAM - totalCardTipsAMafterSplit;
+        const sortedAMServers = [...this.serversAM].sort((a, b) => a.getTotalHours() - b.getTotalHours());
+        let leftoverCardTipsPerServerAM = leftOvercardTipsAM / sortedAMServers.length;
+        sortedAMServers.forEach(server => {
+            if (server === sortedAMServers[sortedAMServers.length - 1]) {
+            // Last server gets all remaining card tips
+            let cardTipOut = parseFloat(server.getCardtipOut());
+            cardTipOut += leftOvercardTipsAM;
+            server.setCardtipOut(cardTipOut.toFixed(2));
+            leftOvercardTipsAM = 0;
+            }
+            if (leftOvercardTipsAM > 0) {
+            let cardTipOut = server.getCardtipOut();
+            cardTipOut += leftoverCardTipsPerServerAM;
+            cardTipOut = cardTipOut.toFixed(2);
+            server.setCardtipOut(cardTipOut);
+            leftOvercardTipsAM -= leftoverCardTipsPerServerAM;
+            }
         });
 
 
@@ -316,7 +339,7 @@ class calculator {
             this.pmBBPool += server.getBBCashTips(this.bbTipPercent);
             this.pmBBPool += server.getBBCardTips(this.bbTipPercent);
             if (server.getType() === 'server') {
-                this.pmHostPool += server.getHostCashTips(this.hostTipPercent);
+            this.pmHostPool += server.getHostCashTips(this.hostTipPercent);
             }
         });
         let serverTotalHoursPM = this.serversPM.reduce((sum, s) => sum + s.getTotalHours(), 0);
@@ -329,15 +352,51 @@ class calculator {
         let serverTipCashPerHourPM = serverTotalHoursPM > 0 ? totalCashTipsPM / serverTotalHoursPM : 0;
         let serverTipCardPerHourPM = serverTotalHoursPM > 0 ? totalCardTipsPM / serverTotalHoursPM : 0;
 
-        serverTipCashPerHourPM = parseFloat(parseFloat(serverTipCashPerHourPM).toFixed(2));
-        serverTipCardPerHourPM = parseFloat(parseFloat(serverTipCardPerHourPM).toFixed(2));
+        serverTipCashPerHourPM = Math.floor(serverTipCashPerHourPM * 100) / 100;
+        serverTipCardPerHourPM = Math.floor(serverTipCardPerHourPM * 100) / 100;
+
+        let totalCashTipsPMafterSplit = 0
+        let totalCardTipsPMafterSplit = 0;
+
         this.serversPM.forEach(server => {
-            server.setCashtipOut((serverTipCashPerHourPM * server.getTotalHours()).toFixed(2));
-            server.setCardtipOut((serverTipCardPerHourPM * server.getTotalHours()).toFixed(2));
+            totalCashTipsPMafterSplit += Math.floor(serverTipCashPerHourPM * server.getTotalHours());
+            totalCardTipsPMafterSplit += Math.floor(serverTipCardPerHourPM * server.getTotalHours() * 100) / 100;
+            server.setCashtipOut(Math.floor(serverTipCashPerHourPM * server.getTotalHours()));
+            server.setCardtipOut(Math.floor(serverTipCardPerHourPM * server.getTotalHours() * 100) / 100);
+        });
+        totalCardTipsPM += totalCashTipsPM - totalCashTipsPMafterSplit;
+        let leftOvercardTipsPM = totalCardTipsPM - totalCardTipsPMafterSplit;
+        const sortedPMServers = [...this.serversPM].sort((a, b) => a.getTotalHours() - b.getTotalHours());
+        let leftoverCardTipsPerServerPM = leftOvercardTipsPM / sortedPMServers.length;
+        sortedPMServers.forEach(server => {
+            // Your logic here, for example:
+            // console.log(`${server.getName()} worked ${server.getTotalHours()} hours`);
+            if (server === sortedPMServers[sortedPMServers.length - 1]) {
+                // Last server gets all remaining card tips
+                let cardTipOut = parseFloat(server.getCardtipOut());
+                cardTipOut += leftOvercardTipsPM;
+                server.setCardtipOut(cardTipOut.toFixed(2));
+                leftOvercardTipsPM = 0;
+            }
+            if (leftOvercardTipsPM > 0) {
+                let cardTipOut = server.getCardtipOut();
+                cardTipOut += leftoverCardTipsPerServerPM;
+                cardTipOut = cardTipOut.toFixed(2);
+                server.setCardtipOut(cardTipOut);
+                leftOvercardTipsPM -= leftoverCardTipsPerServerPM;
+            }
+
+
         });
 
 
+        //should be the same number
+        console.log('Total Cash Tips PM after split:', totalCashTipsPMafterSplit);
+        console.log('Total cash Tips PM:', totalCashTipsPM);
 
+        //should be the same number
+        console.log('Total Card Tips PM after split:', totalCardTipsPMafterSplit);
+        console.log('Total Card Tips PM:', totalCardTipsPM);
 
 
         if(this.barbacks.length > 0) {
@@ -346,10 +405,6 @@ class calculator {
         if(this.hosts.length > 0) {
             this.calcHostTotalTips();
         }
-        console.log('AM Barback Pool:', this.amBBPool);
-        console.log('AM Host Pool:', this.amHostPool);
-        console.log('PM Barback Pool:', this.pmBBPool);
-        console.log('PM Host Pool:', this.pmHostPool);
 
     }
 
@@ -533,12 +588,27 @@ class calculator {
         this.drawEmployeeEditHead();
 
         // Generate rows with edit buttons (no inline onclick, use data attributes)
+        const formatTime = (timeStr) => {
+            if (!timeStr) return '';
+            let [hour, minute] = timeStr.split(':').map(Number);
+            let suffix = 'AM';
+            if (hour === 0) {
+            hour = 12;
+            } else if (hour === 12) {
+            suffix = 'PM';
+            } else if (hour > 12) {
+            hour -= 12;
+            suffix = 'PM';
+            }
+            return `${hour}:${minute.toString().padStart(2, '0')} ${suffix}`;
+        };
+
         const serverRows = this.servers.map((server, i) => `
             <tr data-type="server" data-index="${i}">
             <td class="editEmployeeNameLength">${server.getName()}</td>
             <td>${server.getAmPm().charAt(0)}</td>
-            <td>${server.getStartTime()}</td>
-            <td>${server.getEndTime()}</td>
+            <td>${formatTime(server.getStartTime())}</td>
+            <td>${formatTime(server.getEndTime())}</td>
             <td>$${server.getCashTips().toFixed(2)}</td>
             <td>$${server.getCardTips().toFixed(2)}</td>
             <td>$${server.getGrossSales().toFixed(2)}</td>
@@ -550,8 +620,8 @@ class calculator {
             <tr data-type="barback" data-index="${i}">
             <td class="editEmployeeNameLength">${barback.getName()}</td>
             <td>${barback.getAmPm().charAt(0)}</td>
-            <td>${barback.getStartTime()}</td>
-            <td>${barback.getEndTime()}</td>
+            <td>${formatTime(barback.getStartTime())}</td>
+            <td>${formatTime(barback.getEndTime())}</td>
             <td></td>
             <td></td>
             <td></td> <!-- Barbacks don't have gross sales -->
@@ -563,8 +633,8 @@ class calculator {
             <tr data-type="host" data-index="${i}">
             <td class="editEmployeeNameLength">${host.getName()}</td>
             <td>${host.getAmPm().charAt(0)}</td>
-            <td>${host.getStartTime()}</td>
-            <td>${host.getEndTime()}</td>
+            <td>${formatTime(host.getStartTime())}</td>
+            <td>${formatTime(host.getEndTime())}</td>
             <td></td>
             <td></td>
             <td></td> <!-- Hosts don't have gross sales -->
